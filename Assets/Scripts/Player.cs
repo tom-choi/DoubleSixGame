@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
     public MMap map;
     public float moveSpeed = 2.5f;
-    public float moveTime = 0.5f;
+    public float moveTime = 0.75f;
 
     private MapNode currentNode;
 
@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        map.ClearMap();
+        map.GenerateMap();
         currentNode = map.firstNode;
         transform.position = currentNode.position + new Vector3(0,0.5f,0);
     }
@@ -39,7 +41,7 @@ public class Player : MonoBehaviour
 
     IEnumerator MoveToNode(Vector3 targetPosition)
     {
-        // 等待 0.25 秒，使玩家停顿一下
+        // 等待 x 秒，使玩家停顿一下
         yield return new WaitForSeconds(moveTime);
 
         // 移动玩家到目标位置

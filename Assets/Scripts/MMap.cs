@@ -77,6 +77,7 @@ public class MMap : MonoBehaviour
         // 创建 BBase 物体的副本，并将其放置在节点的位置
         InstantiateAndRename(bBasePrefab, firstNode.position, mapObject.transform,
         "({0},{1})", (int)firstNode.position.x, (int)firstNode.position.z);
+        
         return firstNode;
     }
     //其他方法
@@ -110,18 +111,18 @@ public class MMap : MonoBehaviour
         instance.name = string.Format(nameFormat, i, j);
 
         // 获取新实例化的GameObject上的MapNode组件
-        MapNode mapNode = instance.GetComponent<MapNode>();
-        if (mapNode == null)
-        {
-            Debug.LogError("The MapNode component is not found on the instantiated GameObject!");
-            return;
-        }
+        // MapNode mapNode = instance.GetComponent<MapNode>();
+        // if (mapNode == null)
+        // {
+        //     Debug.LogError("The MapNode component is not found on the instantiated GameObject!");
+        //     return;
+        // }
 
-        // 设置MapNode组件的属性值
-        mapNode.position = position;
-        mapNode.eventType = EventType.Normal;
-        mapNode.eventInfo = null; // 在后续添加事件响应的方法中会设置该值
-        mapNode.onPlayerEnter += (mapNode) => { }; // 添加一个空委托
+        // // 设置MapNode组件的属性值
+        // mapNode.position = position;
+        // mapNode.eventType = EventType.Normal;
+        // mapNode.eventInfo = null; // 在后续添加事件响应的方法中会设置该值
+        // mapNode.onPlayerEnter += (mapNode) => { }; // 添加一个空委托
     }
 
 

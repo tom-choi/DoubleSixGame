@@ -6,10 +6,8 @@ public class MapNode : MonoBehaviour
 {
     public Vector3 position;
 
-    [SerializeField]
-    private Dictionary<MapNode, int> nextNodes = new Dictionary<MapNode, int>();
-    [SerializeField]
-    private Dictionary<MapNode, int> preNodes = new Dictionary<MapNode, int>();
+    public Dictionary<MapNode, int> nextNodes = new Dictionary<MapNode, int>();
+    public Dictionary<MapNode, int> preNodes = new Dictionary<MapNode, int>();
     public EventType eventType;
     public MapEvent eventInfo;
 
