@@ -96,6 +96,22 @@ public class MMap : MonoBehaviour
     {
         GameObject instance = Instantiate(prefab, position, Quaternion.identity, parentTransform);
         instance.name = string.Format(nameFormat, i, j);
+
+        // 获取新实例化的GameObject上的MapNode组件
+        MapNode mapNode = instance.GetComponent<MapNode>();
+        if (mapNode == null)
+        {
+            Debug.LogError("The MapNode component is not found on the instantiated GameObject!");
+            return;
+        }
+
+        // 设置MapNode组件的属性值
+        mapNode.position = position;
+        mapNode.nextNode = null; // 在后续的CreateNodes方法中会设置该值
+        mapNode.eventType = EventType.Normal;
+        mapNode.eventInfo = null; // 在后续添加事件响应的方法中会设置该值
+        mapNode.onPlayerEnter += () => { }; // 添加一个空委托
     }
+
 
 }
