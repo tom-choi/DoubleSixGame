@@ -5,24 +5,19 @@ using UnityEngine;
 public class MMap : MonoBehaviour
 {
     public MapNode firstNode;
-    private int nodeCount;
+    private int nodeCount = 0;
     //其他属性和方法
     public GameObject bBasePrefab;
     public GameObject mapObject;
 
+
     public void GenerateMap()
     {
         ClearMap();
-        //创建第一个节点
-        firstNode = new MapNode();
-        firstNode.position = transform.position;
-        firstNode.eventType = EventType.Start;
-        MapNode currentNode = firstNode;
-        nodeCount = 1;
-        // 创建 BBase 物体的副本，并将其放置在节点的位置
-        InstantiateAndRename(bBasePrefab, currentNode.position, mapObject.transform,
-        "({0},{1})", (int)currentNode.position.x, (int)currentNode.position.z);
 
+        //创建第一个节点
+        firstNode = CreateFirstNodes();
+        MapNode currentNode = firstNode;
 
         // 创建其余的节点
         currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(1, 0, 0) }, 10);
@@ -34,7 +29,8 @@ public class MMap : MonoBehaviour
         MapNode lastNode = firstNode;
         InstantiateAndRename(bBasePrefab, currentNode.position, mapObject.transform,
         "({0},{1})", (int)currentNode.position.x, (int)currentNode.position.z);
-        currentNode.nextNode = lastNode;
+        currentNode.AddNodeInNextNodes(lastNode,0);
+        lastNode.AddNodeInPreNodes(currentNode,0);
     }
 
     public void ClearMap()
@@ -71,8 +67,18 @@ public class MMap : MonoBehaviour
         }
     }
 
-
-
+    //创建第一个节点
+    private MapNode CreateFirstNodes()
+    {
+        firstNode = new MapNode();
+        firstNode.position = mapObject.transform.position;
+        firstNode.eventType = EventType.Start;
+        nodeCount = 1;
+        // 创建 BBase 物体的副本，并将其放置在节点的位置
+        InstantiateAndRename(bBasePrefab, firstNode.position, mapObject.transform,
+        "({0},{1})", (int)firstNode.position.x, (int)firstNode.position.z);
+        return firstNode;
+    }
     //其他方法
     private MapNode CreateNodes(MapNode currentNode, Vector3[] nodeIncrements, int nodeCount)
     {
@@ -85,14 +91,20 @@ public class MMap : MonoBehaviour
                 newNode.eventType = EventType.Normal;
                 InstantiateAndRename(bBasePrefab, currentNode.position, mapObject.transform,
                     "({0},{1})", (int)currentNode.position.x, (int)currentNode.position.z);
-                currentNode.nextNode = newNode;
+                
+                // connect
+                currentNode.AddNodeInNextNodes(newNode,0);
+                newNode.AddNodeInPreNodes(currentNode,0);
+                
+                // reset
                 currentNode = newNode;
                 this.nodeCount++;
             }
         }
         return currentNode;
     }
-    private void InstantiateAndRename(GameObject prefab, Vector3 position, Transform parentTransform, string nameFormat, int i, int j)
+
+    private void InstantiateAndRename(GameObject prefab, Vector3 position,Transform parentTransform, string nameFormat, int i, int j)
     {
         GameObject instance = Instantiate(prefab, position, Quaternion.identity, parentTransform);
         instance.name = string.Format(nameFormat, i, j);
@@ -107,10 +119,9 @@ public class MMap : MonoBehaviour
 
         // 设置MapNode组件的属性值
         mapNode.position = position;
-        mapNode.nextNode = null; // 在后续的CreateNodes方法中会设置该值
         mapNode.eventType = EventType.Normal;
         mapNode.eventInfo = null; // 在后续添加事件响应的方法中会设置该值
-        mapNode.onPlayerEnter += () => { }; // 添加一个空委托
+        mapNode.onPlayerEnter += (mapNode) => { }; // 添加一个空委托
     }
 
 
