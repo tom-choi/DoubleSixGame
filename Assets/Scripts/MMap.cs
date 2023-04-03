@@ -12,6 +12,7 @@ public class MMap : MonoBehaviour
 
     public void GenerateMap()
     {
+        ClearMap();
         //创建第一个节点
         firstNode = new MapNode();
         firstNode.position = transform.position;
@@ -34,6 +35,19 @@ public class MMap : MonoBehaviour
         InstantiateAndRename(bBasePrefab, currentNode.position, mapObject.transform,
         "({0},{1})", (int)currentNode.position.x, (int)currentNode.position.z);
         currentNode.nextNode = lastNode;
+    }
+
+    public void ClearMap()
+    {
+        // 删除所有子对象
+        for (int i = mapObject.transform.childCount - 1; i >= 0; i--)
+        {
+            GameObject child = mapObject.transform.GetChild(i).gameObject;
+            DestroyImmediate(child);
+        }
+        // 清空地图数据
+        firstNode = null;
+        nodeCount = 0;
     }
 
     public void OnNodeReached(MapNode node)

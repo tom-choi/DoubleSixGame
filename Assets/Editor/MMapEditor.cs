@@ -39,6 +39,10 @@ public class MMapEditor : Editor
         {
             mMap.GenerateMap();
         }
+        if (GUILayout.Button("Clear Map"))
+        {
+            mMap.ClearMap();
+        }
 
         // Apply any changes to the serializedObject
         mMapObject.ApplyModifiedProperties();
