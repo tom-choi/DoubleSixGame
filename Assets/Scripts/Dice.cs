@@ -15,6 +15,14 @@ public class Dice : MonoBehaviour
         result = Random.Range(1, 7);
         messageHistory[messageIndex] = result.ToString();
         messageIndex = (messageIndex + 1) % 10;
+        MessageUpdater.UpdateMessage(m_Object, messageHistory, messageIndex);
+    }
+}
+
+public static class MessageUpdater
+{
+    public static void UpdateMessage(TextMeshProUGUI m_Object, string[] messageHistory, int messageIndex)
+    {
         string message = messageHistory[messageIndex] + "\n";
         for (int i = 1; i < 10; i++)
         {
