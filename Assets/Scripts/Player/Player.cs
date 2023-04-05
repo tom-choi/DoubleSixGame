@@ -28,6 +28,16 @@ public class Player : MonoBehaviour
         }
     }
 
+    public IEnumerator WaitForRollDice()
+    {
+        // Wait for the player to click the "Roll Dice" button
+        // while (!gameController.diceRolled)
+        // {
+        //     yield return null;
+        // }
+        yield return null;
+    }
+
     void MoveToNextNode()
     {
         if (!currentNode.NextNodesIsEmpty())
