@@ -261,7 +261,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 126248875}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8b41d157fd96a74da7b80c5e8d2b4cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ac1969d750ed694fb90be9bf0293667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 526181973}
@@ -293,10 +293,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 312918791}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a71aef2078fe614fa75278e2684e4d9, type: 3}
+  m_Script: {fileID: 11500000, guid: 0df6280a2dea5344c963006794b024c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Object: {fileID: 1577910567}
+  minValue: 1
+  maxValue: 7
 --- !u!4 &312918793
 Transform:
   m_ObjectHideFlags: 0
@@ -532,7 +533,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 526181971}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82113bf7cf307174a88b1343f09d5207, type: 3}
+  m_Script: {fileID: 11500000, guid: cf5a8f91b1ce1d34ea897bef18986be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   firstNode: {fileID: 0}
@@ -823,7 +824,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d76c1d9d3ed418e4c88714bf8008dd45, type: 3}
+  m_Script: {fileID: 11500000, guid: fc479137dabdfd34994436f5c2f0ec4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
