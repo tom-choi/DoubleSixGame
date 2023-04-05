@@ -17,6 +17,11 @@ public class Dice : MonoBehaviour
         messageIndex = (messageIndex + 1) % 10;
         MessageUpdater.UpdateMessage(m_Object, messageHistory, messageIndex);
     }
+
+    public int GetResult()
+    {
+        return result;
+    }
 }
 
 public static class MessageUpdater
