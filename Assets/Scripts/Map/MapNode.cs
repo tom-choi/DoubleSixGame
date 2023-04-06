@@ -8,7 +8,7 @@ public class MapNode : MonoBehaviour
 
     public Dictionary<MapNode, int> nextNodes = new Dictionary<MapNode, int>();
     public Dictionary<MapNode, int> preNodes = new Dictionary<MapNode, int>();
-    public EventType eventType;
+    public MapEventType mapEventType;
     public MapEvent eventInfo;
 
     public void AddNodeInNextNodes(MapNode node,int level)

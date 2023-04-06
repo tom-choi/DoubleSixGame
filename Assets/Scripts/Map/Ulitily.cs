@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EventType
+public enum MapEventType
 {
     None,
     Start,
@@ -19,12 +19,12 @@ public delegate void MapNodeEvent(MapNode node);
 
 public class MapEvent
 {
-    public EventType eventType;
+    public MapEventType mapEventType;
     public string eventMessage;
 
-    public MapEvent(EventType type, string message)
+    public MapEvent(MapEventType type, string message)
     {
-        eventType = type;
+        mapEventType = type;
         eventMessage = message;
     }
 }

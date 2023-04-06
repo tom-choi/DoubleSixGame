@@ -12,6 +12,8 @@ public class MMap : MonoBehaviour
     public GameObject bBasePrefab;
     public GameObject mapObject;
 
+    public int selectedMap = 1; // default to Map1
+
     void Awake()
     {
         GenerateMap();
@@ -56,8 +58,22 @@ public class MMap : MonoBehaviour
         firstNode = CreateFirstNodes();
         MapNode currentNode = firstNode;
 
-        // 创建其余的节点
-        currentNode = Map3(currentNode);
+        // 根据用户选择的地图生成节点
+        switch (selectedMap)
+        {
+            case 1:
+                currentNode = Map1(currentNode);
+                break;
+            case 2:
+                currentNode = Map2(currentNode);
+                break;
+            case 3:
+                currentNode = Map3(currentNode);
+                break;
+            default:
+                Debug.LogError("Invalid map selection!");
+                break;
+        }
 
         //创建最后一个节点
         MapNode lastNode = firstNode;
@@ -85,15 +101,15 @@ public class MMap : MonoBehaviour
     {
         if (node.eventInfo != null)
         {
-            switch (node.eventInfo.eventType)
+            switch (node.eventInfo.mapEventType)
             {
-                case EventType.Start:
+                case MapEventType.Start:
                     Debug.Log("Starting event: " + node.eventInfo.eventMessage);
                     break;
-                case EventType.Normal:
+                case MapEventType.Normal:
                     Debug.Log("Normal event: " + node.eventInfo.eventMessage);
                     break;
-                case EventType.End:
+                case MapEventType.End:
                     Debug.Log("Ending event: " + node.eventInfo.eventMessage);
                     break;
                 default:
@@ -107,7 +123,7 @@ public class MMap : MonoBehaviour
     {
         firstNode = new MapNode();
         firstNode.position = mapObject.transform.position;
-        firstNode.eventType = EventType.Start;
+        firstNode.mapEventType = MapEventType.Start;
         nodeCount = 1;
         // 创建 BBase 物体的副本，并将其放置在节点的位置
         InstantiateAndRename(bBasePrefab, firstNode.position, mapObject.transform,
@@ -124,7 +140,7 @@ public class MMap : MonoBehaviour
             {
                 MapNode newNode = new MapNode();
                 newNode.position = currentNode.position + increment;
-                newNode.eventType = EventType.Normal;
+                newNode.mapEventType = MapEventType.Normal;
                 InstantiateAndRename(bBasePrefab, currentNode.position, mapObject.transform,
                     "({0},{1})", (int)currentNode.position.x, (int)currentNode.position.z);
                 
