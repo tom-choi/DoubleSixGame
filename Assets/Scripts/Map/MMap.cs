@@ -31,6 +31,23 @@ public class MMap : MonoBehaviour
         return currentNode;
     }
 
+    private MapNode Map2(MapNode currentNode)
+    {
+        currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(1, 0, 0) }, 10);
+        currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(0, 0, 1) }, 10);
+        return currentNode;
+    }
+
+    private MapNode Map3(MapNode currentNode)
+    {
+        currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(1, 0, 0) }, Random.Range(1, 5));
+        currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(0, 0, 1) }, Random.Range(1, 5));
+        currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(1, 0, 0) }, Random.Range(1, 5));
+        currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(0, 0, 1) }, Random.Range(1, 5));
+
+        return currentNode;
+    }
+
     public void GenerateMap()
     {
         ClearMap();
@@ -40,7 +57,7 @@ public class MMap : MonoBehaviour
         MapNode currentNode = firstNode;
 
         // 创建其余的节点
-        currentNode = Map1(currentNode);
+        currentNode = Map3(currentNode);
 
         //创建最后一个节点
         MapNode lastNode = firstNode;
