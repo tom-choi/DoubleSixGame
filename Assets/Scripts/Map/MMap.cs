@@ -4,11 +4,23 @@ using UnityEngine;
 
 public class MMap : MonoBehaviour
 {
+    
     public MapNode firstNode;
+    public MapNode[,] nodes = new MapNode[30, 30];
     private int nodeCount = 0;
     //其他属性和方法
     public GameObject bBasePrefab;
     public GameObject mapObject;
+
+    void Awake()
+    {
+        GenerateMap();
+    }
+
+    public void AddNode(MapNode newNode, int x, int z)
+    {
+        nodes[x, z] = newNode;
+    }
 
 
     public void GenerateMap()
@@ -31,6 +43,7 @@ public class MMap : MonoBehaviour
         "({0},{1})", (int)currentNode.position.x, (int)currentNode.position.z);
         currentNode.AddNodeInNextNodes(lastNode,0);
         lastNode.AddNodeInPreNodes(currentNode,0);
+        AddNode(lastNode,(int)lastNode.position.x, (int)lastNode.position.z);
     }
 
     public void ClearMap()
@@ -77,7 +90,7 @@ public class MMap : MonoBehaviour
         // 创建 BBase 物体的副本，并将其放置在节点的位置
         InstantiateAndRename(bBasePrefab, firstNode.position, mapObject.transform,
         "({0},{1})", (int)firstNode.position.x, (int)firstNode.position.z);
-        
+        AddNode(firstNode,(int)firstNode.position.x, (int)firstNode.position.z);
         return firstNode;
     }
     //其他方法
@@ -94,6 +107,7 @@ public class MMap : MonoBehaviour
                     "({0},{1})", (int)currentNode.position.x, (int)currentNode.position.z);
                 
                 // connect
+                AddNode(newNode,(int)currentNode.position.x, (int)currentNode.position.z);
                 currentNode.AddNodeInNextNodes(newNode,0);
                 newNode.AddNodeInPreNodes(currentNode,0);
                 
