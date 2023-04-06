@@ -14,8 +14,6 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        map.ClearMap();
-        map.GenerateMap();
         currentNode = map.firstNode;
         transform.position = currentNode.position + new Vector3(0,0.5f,0);
     }
