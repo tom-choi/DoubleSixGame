@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapNode : MonoBehaviour
+public class MapNode
 {
     public Vector3 position;
 

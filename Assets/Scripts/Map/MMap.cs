@@ -24,28 +24,39 @@ public class MMap : MonoBehaviour
         nodes[x, z] = newNode;
     }
 
+    // back	Shorthand for writing Vector3(0, 0, -1).
+    // down	Shorthand for writing Vector3(0, -1, 0).
+    // forward	Shorthand for writing Vector3(0, 0, 1).
+    // left	Shorthand for writing Vector3(-1, 0, 0).
+    // negativeInfinity	Shorthand for writing Vector3(float.NegativeInfinity, float.NegativeInfinity, float.NegativeInfinity).
+    // one	Shorthand for writing Vector3(1, 1, 1).
+    // positiveInfinity	Shorthand for writing Vector3(float.PositiveInfinity, float.PositiveInfinity, float.PositiveInfinity).
+    // right	Shorthand for writing Vector3(1, 0, 0).
+    // up	Shorthand for writing Vector3(0, 1, 0).
+    // zero	Shorthand for writing Vector3(0, 0, 0).
+
     private MapNode Map1(MapNode currentNode)
     {
-        currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(1, 0, 0) }, 10);
-        currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(0, 0, 1) }, 10);
-        currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(-1, 0, 0) }, 10);
-        currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(0, 0, -1) }, 9);
+        currentNode = CreateNodes(currentNode, Vector3.right, 10);
+        currentNode = CreateNodes(currentNode, Vector3.forward, 10);
+        currentNode = CreateNodes(currentNode, Vector3.left, 10);
+        currentNode = CreateNodes(currentNode, Vector3.back, 9);
         return currentNode;
     }
 
     private MapNode Map2(MapNode currentNode)
     {
-        currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(1, 0, 0) }, 10);
-        currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(0, 0, 1) }, 10);
+        currentNode = CreateNodes(currentNode, Vector3.right, 10);
+        currentNode = CreateNodes(currentNode, Vector3.forward, 10);
         return currentNode;
     }
 
     private MapNode Map3(MapNode currentNode)
     {
-        currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(1, 0, 0) }, Random.Range(1, 5));
-        currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(0, 0, 1) }, Random.Range(1, 5));
-        currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(1, 0, 0) }, Random.Range(1, 5));
-        currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(0, 0, 1) }, Random.Range(1, 5));
+        currentNode = CreateNodes(currentNode, Vector3.right, Random.Range(1, 5));
+        currentNode = CreateNodes(currentNode, Vector3.forward, Random.Range(1, 5));
+        currentNode = CreateNodes(currentNode, Vector3.right, Random.Range(1, 5));
+        currentNode = CreateNodes(currentNode, Vector3.forward, Random.Range(1, 5));
 
         return currentNode;
     }
@@ -153,6 +164,28 @@ public class MMap : MonoBehaviour
                 currentNode = newNode;
                 this.nodeCount++;
             }
+        }
+        return currentNode;
+    }
+
+    private MapNode CreateNodes(MapNode currentNode, Vector3 nodeIncrements, int nodeCount)
+    {
+        for (int i = 0; i < nodeCount; i++)
+        {
+            MapNode newNode = new MapNode();
+            newNode.position = currentNode.position + nodeIncrements;
+            newNode.mapEventType = MapEventType.Normal;
+            InstantiateAndRename(bBasePrefab, currentNode.position, mapObject.transform,
+                "({0},{1})", (int)currentNode.position.x, (int)currentNode.position.z);
+            
+            // connect
+            AddNode(newNode,(int)currentNode.position.x, (int)currentNode.position.z);
+            currentNode.AddNodeInNextNodes(newNode,0);
+            newNode.AddNodeInPreNodes(currentNode,0);
+            
+            // reset
+            currentNode = newNode;
+            this.nodeCount++;
         }
         return currentNode;
     }
