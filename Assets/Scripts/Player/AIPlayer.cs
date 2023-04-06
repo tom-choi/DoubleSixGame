@@ -16,7 +16,6 @@ public class AIPlayer : MonoBehaviour
 
     void Start()
     {
-        map.GenerateMap();
         currentNode = map.firstNode;
         transform.position = currentNode.position + new Vector3(0,0.5f,0);
     }
