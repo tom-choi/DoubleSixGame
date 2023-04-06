@@ -22,6 +22,14 @@ public class MMap : MonoBehaviour
         nodes[x, z] = newNode;
     }
 
+    private MapNode Map1(MapNode currentNode)
+    {
+        currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(1, 0, 0) }, 10);
+        currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(0, 0, 1) }, 10);
+        currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(-1, 0, 0) }, 10);
+        currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(0, 0, -1) }, 9);
+        return currentNode;
+    }
 
     public void GenerateMap()
     {
@@ -32,10 +40,7 @@ public class MMap : MonoBehaviour
         MapNode currentNode = firstNode;
 
         // 创建其余的节点
-        currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(1, 0, 0) }, 10);
-        currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(0, 0, 1) }, 10);
-        currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(-1, 0, 0) }, 10);
-        currentNode = CreateNodes(currentNode, new Vector3[] { new Vector3(0, 0, -1) }, 9);
+        currentNode = Map1(currentNode);
 
         //创建最后一个节点
         MapNode lastNode = firstNode;
@@ -92,7 +97,7 @@ public class MMap : MonoBehaviour
         "({0},{1})", (int)firstNode.position.x, (int)firstNode.position.z);
         AddNode(firstNode,(int)firstNode.position.x, (int)firstNode.position.z);
         return firstNode;
-    }
+    }    
     //其他方法
     private MapNode CreateNodes(MapNode currentNode, Vector3[] nodeIncrements, int nodeCount)
     {
