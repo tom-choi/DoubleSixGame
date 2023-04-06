@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Dice : MonoBehaviour
 {
@@ -7,12 +8,22 @@ public class Dice : MonoBehaviour
     public int minValue = 1;
     public int maxValue = 7;
 
-    public MessageUpdater messageUpdater;
+    [SerializeField] MessageUpdater messageUpdater = new MessageUpdater();
+    [SerializeField] TextMeshProUGUI channel;
 
+    private void Awake() {
+        if (messageUpdater != null) 
+        {
+            messageUpdater.SetUpMessageUpdater(channel);
+        }
+    }
     public void Roll()
     {
         result = Random.Range(minValue, maxValue);
-        messageUpdater.AddMessage(result.ToString());
+        if (messageUpdater != null) 
+        {
+            messageUpdater.AddMessage(result.ToString());
+        }
     }
 
     public int GetResult()
