@@ -14,7 +14,7 @@ public class DialogueGraphicView : GraphView
     {
         Insert(0, new GridBackground());
 
-        //SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
+        SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
         this.AddManipulator(new ContentZoomer());
         this.AddManipulator(new ContentDragger());
         this.AddManipulator(new SelectionDragger());
@@ -26,6 +26,11 @@ public class DialogueGraphicView : GraphView
         {
             AddElement(GenerateEntryPointNode());
         };
+    }
+
+    public void CreateNode(string nodeName)
+    {
+        AddElement(GenerateEntryPointNode());
     }
 
     private Port GeneratePort(DialogueGraphicNode node, Direction portDirection,Port.Capacity capacity = Port.Capacity.Single)
@@ -81,19 +86,39 @@ public class DialogueGraphicView : GraphView
         AddElement(endNode);
     }
 
+    private void AddChoicePort(DialogueGraphicNode dialogueGraphicNode)
+    {
+        var generatePort = GeneratePort(dialogueGraphicNode, Direction.Output);
+
+        var outputPortCount = dialogueGraphicNode.outputContainer.Query("connector").ToList().Count;
+        generatePort.portName = $"出口 {outputPortCount}";
+
+        dialogueGraphicNode.outputContainer.Add(generatePort);
+        dialogueGraphicNode.RefreshExpandedState();
+        dialogueGraphicNode.RefreshPorts();
+    }
+
     public DialogueGraphicNode GenerateEntryPointNode()
     {
         var node = new DialogueGraphicNode
         {
-            title = "Normal",
+            title = "普通節點",
             DialogueText = "Hello World",
             GUID = Guid.NewGuid().ToString(),
             EntryPoint = true
         };
 
         var generatePort = GeneratePort(node,Direction.Output);
-        generatePort.portName = "Next";
+        generatePort.portName = "出口";
         node.outputContainer.Add(generatePort);
+
+        var InputPort = GeneratePort(node,Direction.Input);
+        InputPort.portName = "入口";
+        node.inputContainer.Add(InputPort);
+
+        var button = new Button(() => {AddChoicePort(node);});
+        button.text = "新增出口";
+        node.titleContainer.Add(button);
 
         node.RefreshExpandedState();
         node.RefreshPorts();
