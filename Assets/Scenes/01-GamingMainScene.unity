@@ -280,7 +280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08b1ca3d72ff5e1478e720a6103853ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSize: 10
+  gridSize: 20
   gridSpacing: 1
 --- !u!1 &312918791
 GameObject:
@@ -313,6 +313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minValue: 1
   maxValue: 7
+  channel: {fileID: 1577910567}
 --- !u!4 &312918793
 Transform:
   m_ObjectHideFlags: 0
@@ -551,9 +552,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf5a8f91b1ce1d34ea897bef18986be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstNode: {fileID: 0}
   bBasePrefab: {fileID: 938617459}
   mapObject: {fileID: 105817559}
+  selectedMap: 1
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -839,10 +840,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc479137dabdfd34994436f5c2f0ec4d, type: 3}
+  m_Script: {fileID: 11500000, guid: 071051ac0ba465d4b9f661ae79987f12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
+  _speed: 3
+  _target: {fileID: 126248879}
 --- !u!1 &1215477374
 GameObject:
   m_ObjectHideFlags: 0
@@ -957,7 +959,7 @@ GameObject:
   - component: {fileID: 1577910568}
   - component: {fileID: 1577910567}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Console_Channel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
