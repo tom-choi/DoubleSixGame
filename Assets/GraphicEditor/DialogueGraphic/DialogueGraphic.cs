@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
-
+using System;
 
 public class DialogueGraphic : EditorWindow 
 {
