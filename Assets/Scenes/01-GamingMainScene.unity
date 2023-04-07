@@ -554,7 +554,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bBasePrefab: {fileID: 938617459}
   mapObject: {fileID: 105817559}
-  selectedMap: 1
+  selectedMap: 3
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
