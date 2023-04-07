@@ -54,7 +54,7 @@ public class DialogueGraphicView : GraphView
     {
         var startNode = new DialogueGraphicNode
         {
-            title = "START",
+            title = "開始節點",
             DialogueText = "Hello World",
             GUID = Guid.NewGuid().ToString(),
             EntryPoint = true
@@ -62,7 +62,7 @@ public class DialogueGraphicView : GraphView
 
         var endNode = new DialogueGraphicNode
         {
-            title = "END",
+            title = "結束節點",
             DialogueText = "Goodbye World",
             GUID = Guid.NewGuid().ToString(),
             EntryPoint = false
