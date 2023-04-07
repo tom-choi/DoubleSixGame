@@ -2,7 +2,9 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 
-public class DialogueGraphic : EditorWindow {
+public class DialogueGraphic : EditorWindow 
+{
+    private DialogueGraphicView _graphView;
 
     [MenuItem("DoubleSixGame/DialogueGraphic")]
     private static void OpenDiaglogeueGraphWindow() 
@@ -12,14 +14,22 @@ public class DialogueGraphic : EditorWindow {
         window.Show();
     }
     
-    void OnEnable()
+    private void OnEnable()
     {
-        rootVisualElement.Add(new DialogueGraphicView()
+        ConstructGraphView();
+    }
+    private void ConstructGraphView()
+    {
+        _graphView = new DialogueGraphicView()
         {
           style  = { flexGrow = 1}
-        });
+        };
+
+        //_graphView.StretchToParentSize();
+        rootVisualElement.Add(_graphView);
     }
-    private void OnGUI() {
-        
+    private void OnDisable() {
+        rootVisualElement.Remove(_graphView);
     }
+
 }
