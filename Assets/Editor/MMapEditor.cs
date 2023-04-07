@@ -77,3 +77,43 @@ public class MMapEditor : Editor
         mMapObject.ApplyModifiedProperties();
     }
 }
+
+public class MyWindow : EditorWindow{
+    private string myText = "This class is responsible for creating and modifying maps in the DoubleSixGame game.";
+
+    private Vector2 scrollPos;
+
+    [MenuItem("Window/DoubleSixGame/SubOption1")]
+    public static void ShowWindowSubOption1()
+    {
+        MyWindow window = (MyWindow)EditorWindow.GetWindow(typeof(MyWindow));
+        window.titleContent = new GUIContent("DoubleSixGame");
+        window.Show();
+    }
+
+    [MenuItem("Window/DoubleSixGame/SubOption2")]
+    public static void ShowWindowSubOption2()
+    {
+        MyWindow window = (MyWindow)EditorWindow.GetWindow(typeof(MyWindow));
+        window.titleContent = new GUIContent("DoubleSixGame");
+        window.Show();
+    }
+    
+    private void OnGUI()
+    {
+        GUILayout.Label("DoubleSixGame", EditorStyles.boldLabel);
+
+        // Create a scrollable view
+        scrollPos = GUILayout.BeginScrollView(scrollPos, GUILayout.ExpandWidth(true),GUILayout.ExpandHeight(true),
+         GUILayout.MaxWidth(2000), GUILayout.MaxHeight(2000),
+          GUILayout.MinWidth(200), GUILayout.MinHeight(200));
+
+        // Draw the nodes and connections
+        GUI.Box(new Rect(0, 0, 50, 50), "Node 1");
+        GUI.Box(new Rect(150, 150, 50, 50), "Node 2");
+        Handles.DrawLine(new Vector3(25, 25), new Vector3(175, 175));
+
+        // End the scrollable view
+        GUILayout.EndScrollView();
+    }
+}
