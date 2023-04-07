@@ -20,7 +20,9 @@ public class DialogueGraphic : EditorWindow
     {
         ConstructGraphView();
         GenerateToolbar();
+        GenerateMiniMap();
     }
+
     private void ConstructGraphView()
     {
         _graphView = new DialogueGraphicView()
@@ -51,6 +53,14 @@ public class DialogueGraphic : EditorWindow
 
         rootVisualElement.Add(toolbar);
     }
+    private void GenerateMiniMap()
+    {
+        var miniMap = new MiniMap {anchored = true};
+        //var cords = _graphView.contentViewContainer.WorldToLocal(new Vector2(this.maxSize.x - 10, 30));
+        miniMap.SetPosition(new Rect(10, 30, 200, 140));
+        _graphView.Add(miniMap);
+    }
+
     private void SaveData()
     {
         throw new NotImplementedException();
