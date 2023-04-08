@@ -1,5 +1,8 @@
 # DoubleSixGame
-a testing Universal Generation gaming repo
+
+A Universal Generation Monopoly game template repository:
+
+* with a prototype which is a basic turn-based Monopoly game with a random tile generation system and a demonstration of character movement effects.
 
 # Unity-Style-Guide
 [File Naming Style](https://github.com/justinwasilenko/Unity-Style-Guide/blob/master/README.md)
