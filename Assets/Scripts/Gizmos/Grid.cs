@@ -8,17 +8,20 @@ public class Grid : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.grey;
-        
         for (int x = 0; x < gridSize; x++)
         {
             for (int z = 0; z < gridSize; z++)
             {
-                // Color[] rainbowColors = new Color[] { Color.red, Color.yellow, Color.green, Color.blue, Color.cyan, Color.magenta, Color.white };
-                // int randomColorIndex = Random.Range(0, rainbowColors.Length);
-                // Gizmos.color = rainbowColors[randomColorIndex];
-
                 Vector3 point = new Vector3(x * gridSpacing, 0, z * gridSpacing);
+                Collider[] colliders = Physics.OverlapSphere(point, 0.5f);
+                if (colliders.Length > 1)
+                {
+                    Gizmos.color = Color.red;
+                }
+                else
+                {
+                    Gizmos.color = Color.grey;
+                }
                 Gizmos.DrawSphere(point, 0.1f);
             }
         }
