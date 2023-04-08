@@ -11,19 +11,21 @@ public class Dice : MonoBehaviour
     [SerializeField] MessageUpdater messageUpdater = new MessageUpdater();
     [SerializeField] TextMeshProUGUI channel;
 
-    private void Awake() {
+    private void Awake() 
+    {
         if (messageUpdater != null) 
         {
             messageUpdater.SetUpMessageUpdater(channel);
         }
     }
-    public void Roll()
+    public int Roll()
     {
         result = Random.Range(minValue, maxValue);
         if (messageUpdater != null) 
         {
             messageUpdater.AddMessage(result.ToString());
         }
+        return result;
     }
 
     public int GetResult()

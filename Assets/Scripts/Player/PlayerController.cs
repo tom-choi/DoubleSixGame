@@ -2,13 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public MMap map;
     public float moveSpeed = 2.5f;
     public float moveTime = 0.75f;
+    private float moveWaitTime;
 
     private MapNode currentNode;
+    private bool diceInHand = false;
+    private bool iWannaToDice = false;
+
+    private int tmpDiceResult;
 
     //其他属性和方法
 
@@ -16,6 +21,7 @@ public class Player : MonoBehaviour
     {
         currentNode = map.firstNode;
         transform.position = currentNode.position + new Vector3(0,0.5f,0);
+        moveWaitTime = moveTime + 0.25f;
     }
 
     void Update()
@@ -26,14 +32,48 @@ public class Player : MonoBehaviour
         }
     }
 
-    public IEnumerator WaitForRollDice()
+    public void GiveMeDice()
     {
-        // Wait for the player to click the "Roll Dice" button
-        // while (!gameController.diceRolled)
-        // {
-        //     yield return null;
-        // }
-        yield return null;
+        this.iWannaToDice = false;
+        this.diceInHand = true;
+    }
+
+    public void LoseMyDice()
+    {
+        this.iWannaToDice = false;
+        this.diceInHand = false;
+    }
+
+    public void IWannaToDice()
+    {
+        this.iWannaToDice = true;
+    }
+
+    public int getTmpDiceResult()
+    {
+        return tmpDiceResult;
+    }
+
+    public IEnumerator WaitForRollDice(Dice dice)
+    {
+        while (!diceInHand || !iWannaToDice)
+        {
+            yield return null;
+        }
+
+        LoseMyDice();
+
+        int result = dice.Roll();
+        tmpDiceResult = result;
+        // play animation
+
+        //
+        for (int i = 0; i < result; i++)
+        {
+            yield return new WaitForSeconds(moveWaitTime);
+            MoveToNextNode();
+        }
+        
     }
 
     void MoveToNextNode()
