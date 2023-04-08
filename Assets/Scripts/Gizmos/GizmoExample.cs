@@ -1,5 +1,7 @@
 using UnityEngine;
-using UnityEditor;
+#if UNITY_EDITOR
+    using UnityEditor;
+#endif
 
 public class GizmoExample : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class GizmoExample : MonoBehaviour
     public float handleSize = 0.1f;
     public Vector3 sphereOffset = Vector3.up;
 
+    #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Gizmos.color = sphereColor;
@@ -19,4 +22,5 @@ public class GizmoExample : MonoBehaviour
         handlePosition = Handles.PositionHandle(handlePosition, Quaternion.identity);
         sphereOffset = handlePosition - (transform.position + Vector3.up * radius);
     }
+    #endif
 }

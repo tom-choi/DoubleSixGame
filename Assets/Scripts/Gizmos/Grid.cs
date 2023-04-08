@@ -1,4 +1,8 @@
 using UnityEngine;
+#if UNITY_EDITOR
+    using UnityEditor;
+#endif
+
 
 [ExecuteInEditMode]
 public class Grid : MonoBehaviour
@@ -6,6 +10,7 @@ public class Grid : MonoBehaviour
     public int gridSize = 10;
     public float gridSpacing = 1;
 
+    #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         for (int x = 0; x < gridSize; x++)
@@ -26,4 +31,5 @@ public class Grid : MonoBehaviour
             }
         }
     }
+    #endif
 }
