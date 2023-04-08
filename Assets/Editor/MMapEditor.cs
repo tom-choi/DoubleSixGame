@@ -79,7 +79,7 @@ public class MMapEditor : Editor
 }
 
 public class MyWindow : EditorWindow{
-    private string myText = "This class is responsible for creating and modifying maps in the DoubleSixGame game.";
+    //private string myText = "This class is responsible for creating and modifying maps in the DoubleSixGame game.";
 
     private Vector2 scrollPos;
 
