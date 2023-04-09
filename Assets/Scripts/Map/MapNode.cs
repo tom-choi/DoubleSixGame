@@ -49,6 +49,7 @@ public class MapNode
 
     // 添加事件委托类型的成员变量，當玩家進入地塊的時候
     public MapNodeEvent onPlayerEnter;
+    public MapNodeEvent onplayerPassed;
     public void PlayerEntered()
     {
         if (onPlayerEnter != null)
@@ -56,16 +57,23 @@ public class MapNode
             onPlayerEnter(this);
         }
     }
+    public void PlayerPassed()
+    {
+        if (onplayerPassed != null)
+        {
+            onplayerPassed(this);
+        }
+    }
 
-    public void OnPlayerEnterNode(MapNode node)
-    {
-        Debug.Log($"Player entered node {node.position}");
-        // Add trigger event logic here
-    }
-    public void AnotherMethod(MapNode node)
-    {
-        Debug.Log($"This is AnotherMethod()");
-    }
+    // public void OnPlayerEnterNode(MapNode node)
+    // {
+    //     Debug.Log($"Player entered node {node.position}");
+    //     // Add trigger event logic here
+    // }
+    // public void AnotherMethod(MapNode node)
+    // {
+    //     Debug.Log($"This is AnotherMethod()");
+    // }
     // public void VoidMethod()
     // {
     //     Debug.Log($"This is VoidMethod()");
@@ -75,13 +83,15 @@ public class MapNode
     public MapNode()
     {
         // two ways of adding events
-        this.onPlayerEnter += OnPlayerEnterNode;
-        this.onPlayerEnter += AnotherMethod;
+        // this.onPlayerEnter += OnPlayerEnterNode;
+        // this.onPlayerEnter += AnotherMethod;
 
         TestingEvent testingEvent = new TestingEvent();
         this.onPlayerEnter += testingEvent.OnPlayerEnterNode;
         this.onPlayerEnter += testingEvent.AnotherMethod;
 
+        this.onplayerPassed += testingEvent.CurrentNodePosition;
+        
         // but not void
         // this.onPlayerEnter += VoidMethod;
 

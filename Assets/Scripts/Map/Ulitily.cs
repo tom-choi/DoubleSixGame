@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using System.Reflection;
 
 public enum MapEventType
 {
@@ -25,4 +27,17 @@ public class MapEvent
 public class Map
 {
     public MapNode firstNode;
+}
+
+public static class MapNodeUtils
+{
+    public static void ListAllFunctions(MapNode node)
+    {
+        var type = node.GetType();
+        MethodInfo[] methods = type.GetMethods(BindingFlags.Public | BindingFlags.Instance);
+        foreach (MethodInfo method in methods)
+        {
+            Debug.Log(method.Name);
+        }
+    }
 }

@@ -13,4 +13,8 @@ public class TestingEvent
     {
         Debug.Log($"This is AnotherMethod()");
     }
+    public void CurrentNodePosition(MapNode node)
+    {
+        Debug.Log($"{node.position}");
+    }
 }

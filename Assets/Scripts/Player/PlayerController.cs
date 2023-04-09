@@ -84,9 +84,10 @@ public class PlayerController : MonoBehaviour
         if (!currentNode.NextNodesIsEmpty())
         {
             currentNode = currentNode.GetRandomNextNode();
-            Debug.Log(currentNode.position);
+            currentNode.PlayerPassed();
             Vector3 targetPosition = currentNode.position + new Vector3(0,0.5f,0);
             StartCoroutine(MoveToNode(targetPosition));
+            
         }
     }
 
