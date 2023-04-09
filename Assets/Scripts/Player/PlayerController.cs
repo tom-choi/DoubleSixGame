@@ -24,13 +24,13 @@ public class PlayerController : MonoBehaviour
         moveWaitTime = moveTime + 0.25f;
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            MoveToNextNode();
-        }
-    }
+    // void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.Space))
+    //     {
+    //         MoveToNextNode();
+    //     }
+    // }
 
     public void GiveMeDice()
     {
@@ -73,6 +73,9 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(moveWaitTime);
             MoveToNextNode();
         }
+
+        // Event triggered
+        currentNode.PlayerEntered();
         
     }
 

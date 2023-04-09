@@ -47,12 +47,44 @@ public class MapNode
     }
 
 
-    // 添加事件委托类型的成员变量
+    // 添加事件委托类型的成员变量，當玩家進入地塊的時候
     public MapNodeEvent onPlayerEnter;
-    // Start is called before the first frame update
-    void Start()
+    public void PlayerEntered()
     {
-        
+        if (onPlayerEnter != null)
+        {
+            onPlayerEnter(this);
+        }
+    }
+
+    public void OnPlayerEnterNode(MapNode node)
+    {
+        Debug.Log($"Player entered node {node.position}");
+        // Add trigger event logic here
+    }
+    public void AnotherMethod(MapNode node)
+    {
+        Debug.Log($"This is AnotherMethod()");
+    }
+    // public void VoidMethod()
+    // {
+    //     Debug.Log($"This is VoidMethod()");
+    // }
+
+    // Start is called before the first frame update
+    public MapNode()
+    {
+        // two ways of adding events
+        this.onPlayerEnter += OnPlayerEnterNode;
+        this.onPlayerEnter += AnotherMethod;
+
+        TestingEvent testingEvent = new TestingEvent();
+        this.onPlayerEnter += testingEvent.OnPlayerEnterNode;
+        this.onPlayerEnter += testingEvent.AnotherMethod;
+
+        // but not void
+        // this.onPlayerEnter += VoidMethod;
+
     }
 
 }
