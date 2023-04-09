@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 public class MapNode
 {
     public Vector3 position;
+    public string GUID;
 
     public Dictionary<MapNode, int> nextNodes = new Dictionary<MapNode, int>();
     public Dictionary<MapNode, int> preNodes = new Dictionary<MapNode, int>();
@@ -42,7 +44,7 @@ public class MapNode
             return null;
         }
         List<MapNode> nodeList = ReConstractDict();
-        int randomIndex = Random.Range(0, nodeList.Count);
+        int randomIndex = UnityEngine.Random.Range(0, nodeList.Count);
         return nodeList[randomIndex];
     }
 
@@ -82,6 +84,7 @@ public class MapNode
     // Start is called before the first frame update
     public MapNode()
     {
+        this.GUID = Guid.NewGuid().ToString();
         // two ways of adding events
         // this.onPlayerEnter += OnPlayerEnterNode;
         // this.onPlayerEnter += AnotherMethod;

@@ -40,4 +40,10 @@ public static class MapNodeUtils
             Debug.Log(method.Name);
         }
     }
+    public static int ChebyshevDistance(MapNode node1, MapNode node2)
+    {
+        int dx = Mathf.Abs((int)node1.position.x - (int)node2.position.x);
+        int dy = Mathf.Abs((int)node1.position.y - (int)node2.position.y);
+        return Mathf.Max(dx, dy);
+    }
 }
