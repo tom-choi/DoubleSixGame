@@ -46,4 +46,5 @@ public static class MapNodeUtils
         int dy = Mathf.Abs((int)node1.position.y - (int)node2.position.y);
         return Mathf.Max(dx, dy);
     }
+    
 }

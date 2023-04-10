@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class MMap : MonoBehaviour
 {
-    
     public MapNode firstNode;
     public MapNode[,] nodes = new MapNode[30, 30];
     private int nodeCount = 0;
+    
     //其他属性和方法
     public GameObject bBasePrefab;
     public GameObject mapObject;
@@ -195,13 +195,17 @@ public class MMap : MonoBehaviour
         GameObject instance = Instantiate(prefab, position, Quaternion.identity, parentTransform);
         instance.name = string.Format(nameFormat, i, j);
 
+        // Add code here to find the instance named "GameController"
+        GameObject gameController = GameObject.Find("GameController");
+
         // Set default color to red
-        instance.GetComponent<Renderer>().material.color = Color.red;
+        instance.GetComponent<Renderer>().material = gameController.GetComponent<GameController>().GetFirstMaterials();
+        
 
         // Set random rainbow color
-        Color[] rainbowColors = new Color[] { Color.red, Color.yellow, Color.green, Color.blue, Color.cyan, Color.magenta, Color.white };
-        int randomColorIndex = Random.Range(0, rainbowColors.Length);
-        instance.GetComponent<Renderer>().material.color = rainbowColors[randomColorIndex];
+        // Color[] rainbowColors = new Color[] { Color.red, Color.yellow, Color.green, Color.blue, Color.cyan, Color.magenta, Color.white };
+
+        instance.GetComponent<Renderer>().material = gameController.GetComponent<GameController>().GetRandomMaterials();
 
         
         // Add code here to change the color of the gameobject instance

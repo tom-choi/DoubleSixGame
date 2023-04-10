@@ -30,6 +30,9 @@ public class Property
 
 public class Sample
 {
+    Property property21 = new Property(1, "201", 1000f, 1, null, 50f);
+    Property property22 = new Property(2, "202", 2000f, 1, null, 100f);
+    Property property23 = new Property(2, "302", 2000f, 1, null, 100f);
     Sample()
     {
         List<Property> properties = new List<Property>();

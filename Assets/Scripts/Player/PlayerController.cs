@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
 
     private int tmpDiceResult;
 
+    public bool isAI = false;
+
     //其他属性和方法
 
     void Start()
@@ -54,6 +56,16 @@ public class PlayerController : MonoBehaviour
         return tmpDiceResult;
     }
 
+    public void iAmAI()
+    {
+        this.isAI = true;
+    }
+
+    public bool amIAI()
+    {
+        return this.isAI;
+    }
+
     public IEnumerator WaitForRollDice(Dice dice)
     {
         while (!diceInHand || !iWannaToDice)
@@ -63,7 +75,32 @@ public class PlayerController : MonoBehaviour
 
         LoseMyDice();
 
-        int result = dice.Roll();
+        int result = dice.PlayerRoll("Player");
+        tmpDiceResult = result;
+        // play animation
+
+        //
+        for (int i = 0; i < result; i++)
+        {
+            yield return new WaitForSeconds(moveWaitTime);
+            MoveToNextNode();
+        }
+
+        // Event triggered
+        currentNode.PlayerEntered();
+        
+    }
+
+    public IEnumerator AIWaitForRollDice(Dice dice)
+    {
+        while (!diceInHand)
+        {
+            yield return null;
+        }
+
+        LoseMyDice();
+
+        int result = dice.PlayerRoll("AI");
         tmpDiceResult = result;
         // play animation
 

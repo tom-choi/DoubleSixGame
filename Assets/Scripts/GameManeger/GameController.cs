@@ -18,6 +18,9 @@ public class GameController : MonoBehaviour
     // 初始化玩家位置，设置玩家编号，开始游戏
     void Start()
     {
+        // init maxPlayerCount
+        maxPlayerCount = players.Length;
+
         playerPositions = new int[maxPlayerCount];
 
         for (int i = 0; i < maxPlayerCount; i++)
@@ -68,7 +71,15 @@ public class GameController : MonoBehaviour
         PlayerController playerController = players[currentPlayer].GetComponent<PlayerController>();
         playerController.GiveMeDice();
         // 等待玩家投骰子
-        yield return StartCoroutine(playerController.WaitForRollDice(dice));
+        // judge if AI
+        if (playerController.amIAI())
+        {
+            yield return StartCoroutine(playerController.AIWaitForRollDice(dice));
+        }
+        else
+        {
+            yield return StartCoroutine(playerController.WaitForRollDice(dice));
+        }
         this.tmpDiceResult = playerController.getTmpDiceResult();
 
         // 播放骰子动画，并更新骰子点数显示
@@ -81,5 +92,18 @@ public class GameController : MonoBehaviour
         // reset
         // playerController.LoseMyDice();
         yield return new WaitForSeconds(1.0f);
+    }
+
+    public Material[] materials;
+
+    public Material GetFirstMaterials()
+    {
+        return materials[0];
+    }
+
+    public Material GetRandomMaterials()
+    {
+        int randomColorIndex = Random.Range(0, materials.Length);
+        return materials[randomColorIndex];  
     }
 }

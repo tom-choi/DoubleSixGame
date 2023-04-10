@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class PropertyEditor : EditorWindow
 {
     private int id;
-    private string name;
+    private string propertyName;
     private float price;
     private int level;
     private string owner;

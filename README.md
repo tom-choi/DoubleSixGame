@@ -8,6 +8,7 @@ A Universal Generation Monopoly game template repository:
 [File Naming Style](https://github.com/justinwasilenko/Unity-Style-Guide/blob/master/README.md)
 
 # Log (Demo)
+![](https://cdn.discordapp.com/attachments/623466543426043908/1095018669165269062/QQ20230411001103.gif)
 
 ![](https://cdn.discordapp.com/attachments/623466543426043908/1094312668883583086/QQ20230409012653.gif)
 

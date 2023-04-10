@@ -7,6 +7,12 @@ public class CameraController : MonoBehaviour
     [SerializeField] private bool _isMouseControlEnabled = false;
     private Vector3 _offset;
 
+    public void SetTarget(Transform newTarget)
+    {
+        _target = newTarget;
+        _offset = transform.position - _target.position;
+    }
+
     private void Start()
     {
         _offset = transform.position - _target.position;

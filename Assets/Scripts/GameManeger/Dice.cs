@@ -21,9 +21,14 @@ public class Dice : MonoBehaviour
     public int Roll()
     {
         result = Random.Range(minValue, maxValue);
+        return result;
+    }
+    public int PlayerRoll(string playerName)
+    {
+        int tmp = Roll();
         if (messageUpdater != null) 
         {
-            messageUpdater.AddMessage(result.ToString());
+            messageUpdater.AddMessage(playerName + " roll " + result.ToString() + " !");
         }
         return result;
     }
