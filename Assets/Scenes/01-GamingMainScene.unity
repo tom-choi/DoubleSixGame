@@ -5275,7 +5275,6 @@ Transform:
   - {fileID: 526181972}
   - {fileID: 312918793}
   - {fileID: 1288009386}
-  - {fileID: 1421582965}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5609,7 +5608,14 @@ MonoBehaviour:
   maxPlayerCount: 1
   gameOver: 0
   dice: {fileID: 312918792}
-  materials: []
+  materials:
+  - {fileID: 2100000, guid: 6d4f2dc376da55b49bf3ecad90bb6044, type: 2}
+  - {fileID: 2100000, guid: 6b84a817bfbd7e14dbf55eeeed078830, type: 2}
+  - {fileID: 2100000, guid: cec146e3980076e4e8b73756215e0b6b, type: 2}
+  - {fileID: 2100000, guid: c7e005c6ec142be46b9668754b3d2fda, type: 2}
+  - {fileID: 2100000, guid: bc7b5fba9fda6e540a775a994e4518ad, type: 2}
+  - {fileID: 2100000, guid: 26501ae1a852d8c4cacc29d0995c31e9, type: 2}
+  - {fileID: 2100000, guid: fb7bc8eefe52a8f4d97a5a644828fb69, type: 2}
 --- !u!4 &1288009386
 Transform:
   m_ObjectHideFlags: 0
@@ -6146,50 +6152,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1399399552}
   m_CullTransparentMesh: 1
---- !u!1 &1421582964
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1421582965}
-  - component: {fileID: 1421582966}
-  m_Layer: 0
-  m_Name: LogManeger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1421582965
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1421582964}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1215477375}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1421582966
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1421582964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dcc733a9da3321469c57a13c1b421ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1432719171
 GameObject:
   m_ObjectHideFlags: 0
