@@ -8,3 +8,4 @@ public delegate void MapNodeEvent(MapNode node);
 //     Debug.Log($"Player entered node {node.position}");
 //     // 在这里添加触发事件的逻辑
 // };
+

@@ -2,6 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum AssetType { RealEstate, Stock, Bonus };
+
+public class Asset
+{
+    public string assetName;
+    public int assetValue;
+    public AssetType assetType;
+    public string assetOwner;
+    public Asset(string name, int value, AssetType type, string owner)
+    {
+        assetName = name;
+        assetValue = value;
+        assetType = type;
+        assetOwner = owner;
+    }
+}
+
 // Define the player information class
 public class PlayerInfo
 {
@@ -18,14 +35,6 @@ public class PlayerInfo
     public int cashAmount;
 
     // Player's assets
-    public class Asset
-    {
-        public string assetName;
-        public int assetValue;
-        public enum AssetType { RealEstate, Stock, Bonus };
-        public AssetType assetType;
-        public string assetOwner;
-    }
     public List<Asset> assets;
 
     // Player's status
