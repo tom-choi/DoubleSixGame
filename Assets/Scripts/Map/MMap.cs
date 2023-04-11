@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text.RegularExpressions;
+using System;
 
 public class MMap : MonoBehaviour
 {
@@ -13,10 +15,12 @@ public class MMap : MonoBehaviour
     public GameObject mapObject;
 
     public int selectedMap = 1; // default to Map1
+    public String MapPassword = "R10F10L5B5L5";
 
     void Awake()
     {
-        GenerateMap();
+        // GenerateMap();
+        GenerateMap(MapPassword);
     }
 
     public void AddNode(MapNode newNode, int x, int z)
@@ -28,12 +32,14 @@ public class MMap : MonoBehaviour
     // down	Shorthand for writing Vector3(0, -1, 0).
     // forward	Shorthand for writing Vector3(0, 0, 1).
     // left	Shorthand for writing Vector3(-1, 0, 0).
-    // negativeInfinity	Shorthand for writing Vector3(float.NegativeInfinity, float.NegativeInfinity, float.NegativeInfinity).
     // one	Shorthand for writing Vector3(1, 1, 1).
-    // positiveInfinity	Shorthand for writing Vector3(float.PositiveInfinity, float.PositiveInfinity, float.PositiveInfinity).
     // right	Shorthand for writing Vector3(1, 0, 0).
     // up	Shorthand for writing Vector3(0, 1, 0).
     // zero	Shorthand for writing Vector3(0, 0, 0).
+
+    // seldom use
+    // positiveInfinity	Shorthand for writing Vector3(float.PositiveInfinity, float.PositiveInfinity, float.PositiveInfinity).
+    // negativeInfinity	Shorthand for writing Vector3(float.NegativeInfinity, float.NegativeInfinity, float.NegativeInfinity).
 
     private MapNode Map1(MapNode currentNode)
     {
@@ -53,15 +59,61 @@ public class MMap : MonoBehaviour
 
     private MapNode Map3(MapNode currentNode)
     {
-        currentNode = CreateNodes(currentNode, Vector3.right, Random.Range(1, 5));
-        currentNode = CreateNodes(currentNode, Vector3.forward, Random.Range(1, 5));
-        currentNode = CreateNodes(currentNode, Vector3.right, Random.Range(1, 5));
-        currentNode = CreateNodes(currentNode, Vector3.forward, Random.Range(1, 5));
+        currentNode = CreateNodes(currentNode, Vector3.right, UnityEngine.Random.Range(1, 5));
+        currentNode = CreateNodes(currentNode, Vector3.forward, UnityEngine.Random.Range(1, 5));
+        currentNode = CreateNodes(currentNode, Vector3.right, UnityEngine.Random.Range(1, 5));
+        currentNode = CreateNodes(currentNode, Vector3.forward, UnityEngine.Random.Range(1, 5));
 
         return currentNode;
     }
+    
+    private MapNode DecodeMapPassword(MapNode currentNode, string password)
+    {
+  
+        string pattern = "^[BDFLORUZ]\\d+$";
+        if (Regex.IsMatch(password, pattern))
+        {
+            throw new ArgumentException("Invalid password format");
+        }
 
-    public void GenerateMap()
+        int i = 0;
+        foreach (Match match in Regex.Matches(password, @"[BDFLORUZ]\d+"))
+        {
+            string direction = match.Value.Substring(0, 1);
+            int distance = int.Parse(match.Value.Substring(1));
+            switch(direction)
+            {
+                case "B":
+                    currentNode = CreateNodes(currentNode, Vector3.back, distance);
+                    break;
+                case "D":
+                    currentNode = CreateNodes(currentNode, Vector3.down, distance);
+                    break;
+                case "F":
+                    currentNode = CreateNodes(currentNode, Vector3.forward, distance);
+                    break;
+                case "L":
+                    currentNode = CreateNodes(currentNode, Vector3.left, distance);
+                    break;
+                case "O":
+                    currentNode = CreateNodes(currentNode, Vector3.one, distance);
+                    break;
+                case "R":
+                    currentNode = CreateNodes(currentNode, Vector3.right, distance);
+                    break;
+                case "U":
+                    currentNode = CreateNodes(currentNode, Vector3.up, distance);
+                    break;
+                case "Z":
+                    currentNode = CreateNodes(currentNode, Vector3.zero, distance);
+                    break;
+            }
+            // Debug.Log(match.Value);
+        }
+        return currentNode;
+    }
+
+    public bool GenerateMap()
     {
         ClearMap();
 
@@ -83,16 +135,40 @@ public class MMap : MonoBehaviour
                 break;
             default:
                 Debug.LogError("Invalid map selection!");
-                break;
+                return false;
         }
 
-        //创建最后一个节点
+        //创建最后一个节点，默認循環
         MapNode lastNode = firstNode;
         InstantiateAndRename(bBasePrefab, currentNode.position, mapObject.transform,
         "({0},{1})", (int)currentNode.position.x, (int)currentNode.position.z);
         currentNode.AddNodeInNextNodes(lastNode,0);
         lastNode.AddNodeInPreNodes(currentNode,0);
         AddNode(lastNode,(int)lastNode.position.x, (int)lastNode.position.z);
+
+        return true;
+    }
+    
+    public bool GenerateMap(string password)
+    {
+        ClearMap();
+
+        //创建第一个节点
+        firstNode = CreateFirstNodes();
+        MapNode currentNode = firstNode;
+
+        // 根据密碼生成节点
+        currentNode = DecodeMapPassword(currentNode,password);
+
+        //创建最后一个节点，默認循環
+        MapNode lastNode = firstNode;
+        InstantiateAndRename(bBasePrefab, currentNode.position, mapObject.transform,
+        "({0},{1})", (int)currentNode.position.x, (int)currentNode.position.z);
+        currentNode.AddNodeInNextNodes(lastNode,0);
+        lastNode.AddNodeInPreNodes(currentNode,0);
+        AddNode(lastNode,(int)lastNode.position.x, (int)lastNode.position.z);
+
+        return true;
     }
 
     public void ClearMap()

@@ -9,7 +9,10 @@ public class MMapEditor : Editor
 
     private SerializedProperty bBasePrefabProp;
     private SerializedProperty mapObjectProp;
-
+    private int selectedMap = 0;
+    private string[] options = new string[] { "Default Map", "Custom Map", "Placeholder" };
+    public string inputFieldValue = "R5F3L4B2";
+    
     private void OnEnable()
     {
         mMap = (MMap)target;
@@ -56,22 +59,104 @@ public class MMapEditor : Editor
         // Draw a separator
         EditorGUILayout.Space();
 
+        // Selected 
+        selectedMap = EditorGUILayout.Popup("Select Map", selectedMap, options);
+
         // Draw the button to generate the map
-        if (GUILayout.Button("Generate Map"))
+        // Default
+        switch(selectedMap)
         {
-            if (mMap.mapObject == null)
+            case 0:
             {
-                EditorGUILayout.HelpBox("Map object is null!", MessageType.Error);
-                return;
+                if (GUILayout.Button("Generate Map"))
+                {
+                    if (mMap.mapObject == null)
+                    {
+                        EditorGUILayout.HelpBox("Map Container is null!", MessageType.Error);
+                        return;
+                    }
+                    if (!mMap.GenerateMap())
+                    {
+                        EditorGUILayout.HelpBox("GenerateMap failed! check your Debug.LogError", MessageType.Error);
+                    }
+                }
+                if (GUILayout.Button("Clear Map"))
+                {
+                    mMap.ClearMap();
+                }
+                // Draw the property to modify the selected map
+                EditorGUILayout.PropertyField(mMapObject.FindProperty("selectedMap"));
+                break;
             }
-            mMap.GenerateMap();
+            case 1:
+            {
+                // Draw the input field in the editor
+                mMapObject.FindProperty("MapPassword").stringValue = 
+                EditorGUILayout.TextField("Map Password", mMapObject.FindProperty("MapPassword").stringValue); //MapPassword
+
+                var mapPassword = mMapObject.FindProperty("MapPassword").stringValue;
+                // Use the input field value in your code as needed
+                // For example, you could use it to set a property value:
+                // mMapObject.FindProperty("myProperty").stringValue = mapPassword;
+                if (GUILayout.Button("Generate Map"))
+                {
+                    if (mMap.mapObject == null)
+                    {
+                        EditorGUILayout.HelpBox("Map Container is null!", MessageType.Error);
+                        return;
+                    }
+                    if (!mMap.GenerateMap(mapPassword))
+                    {
+                        EditorGUILayout.HelpBox("GenerateMap failed! check your Debug.LogError", MessageType.Error);
+                    }
+                }
+                if (GUILayout.Button("Clear Map"))
+                {
+                    mMap.ClearMap();
+                }
+                break;
+            }
+            default:
+                break;
+
         }
-        if (GUILayout.Button("Clear Map"))
+        // Custom
+        // if (GUILayout.Button("Generate Map"))
+        // {
+        //     if (mMap.mapObject == null)
+        //     {
+        //         EditorGUILayout.HelpBox("Map Container is null!", MessageType.Error);
+        //         return;
+        //     }
+        //     mMap.GenerateMap();
+        // }
+
+        switch(selectedMap)
         {
-            mMap.ClearMap();
+            case 0:
+            {
+                GUILayout.Label("Default Map Info");
+                break;
+            }
+            case 1:
+            {
+                GUILayout.Label("Custom Map Info");
+                GUILayout.Label("back	Shorthand for writing Vector3(0, 0, -1).");
+                GUILayout.Label("down	Shorthand for writing Vector3(0, -1, 0).");
+                GUILayout.Label("forward	Shorthand for writing Vector3(0, 0, 1).");
+                GUILayout.Label("left	Shorthand for writing Vector3(-1, 0, 0).");
+                GUILayout.Label("one	Shorthand for writing Vector3(1, 1, 1).");
+                GUILayout.Label("right	Shorthand for writing Vector3(1, 0, 0).");
+                GUILayout.Label("up	Shorthand for writing Vector3(0, 1, 0).");
+                GUILayout.Label("zero	Shorthand for writing Vector3(0, 0, 0).");
+                break;
+            }
+            case 2:
+            {
+                GUILayout.Label("Placeholder Info");
+                break;
+            }
         }
-        // Draw the property to modify the selected map
-        EditorGUILayout.PropertyField(mMapObject.FindProperty("selectedMap"));
 
         // Apply any changes to the serializedObject
         mMapObject.ApplyModifiedProperties();
