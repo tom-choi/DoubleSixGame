@@ -3,50 +3,77 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private float _speed = 3.0f;
-    [SerializeField] private Transform _target;
-    [SerializeField] private bool _isMouseControlEnabled = false;
-    private Vector3 _offset;
+    [SerializeField] private float _maxJumpTime = 0.3f;
 
-    public void SetTarget(Transform newTarget)
+    private bool isMouseControlEnabled;
+    private bool UsingMouseControl
     {
-        _target = newTarget;
-        _offset = transform.position - _target.position;
+        get => isMouseControlEnabled;
+        set
+        {
+            isMouseControlEnabled = value;
+            Cursor.visible = !value;
+            Cursor.lockState = value ? CursorLockMode.Locked : CursorLockMode.None;
+        }
     }
 
-    private void Start()
+    private void HandleMouseMovement()
     {
-        _offset = transform.position - _target.position;
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
+
+        Vector3 newRotation = transform.eulerAngles + new Vector3(-mouseY, mouseX, 0);
+        if (newRotation.x < 180)
+            newRotation.x = Mathf.Min(newRotation.x, 89);
+        if (newRotation.x >= 180)
+            newRotation.x = Mathf.Max(newRotation.x, 271);
+        transform.eulerAngles = newRotation;
+    }
+
+    private void HandleKeyboardMovement()
+    {
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        float verticalInput = Input.GetAxisRaw("Vertical");
+
+        Vector3 flattenedForward = transform.forward;
+        flattenedForward.y = 0;
+        flattenedForward.Normalize();
+
+        Vector3 forward = _speed * Time.deltaTime * verticalInput * flattenedForward;
+        Vector3 right = _speed * Time.deltaTime * horizontalInput * transform.right;
+
+        Vector3 newPosition = transform.position + forward + right;
+        if (Input.GetKey(KeyCode.Space))
+        {
+            newPosition.y += _speed * Time.deltaTime;
+        }
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            newPosition.y -= _speed * Time.deltaTime;
+        }
+
+        newPosition.x = Mathf.Clamp(newPosition.x, -10, 10);
+        newPosition.z = Mathf.Clamp(newPosition.z, -10, 10);
+
+        transform.position = newPosition;
     }
 
     private void LateUpdate()
     {
+        if (UsingMouseControl && Input.GetKeyDown(KeyCode.Escape))
+        {
+            UsingMouseControl = false;
+        }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            _isMouseControlEnabled = !_isMouseControlEnabled;
-            Cursor.visible = !_isMouseControlEnabled;
-            Cursor.lockState = _isMouseControlEnabled ? CursorLockMode.Locked : CursorLockMode.None;
+            UsingMouseControl = !UsingMouseControl;
         }
 
-        if (_isMouseControlEnabled)
+        if (UsingMouseControl)
         {
-            float mouseX = Input.GetAxis("Mouse X");
-            float mouseY = Input.GetAxis("Mouse Y");
-
-            Vector3 newRotation = transform.eulerAngles + new Vector3(-mouseY, mouseX, 0);
-            transform.eulerAngles = newRotation;
+            HandleMouseMovement();
         }
 
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-
-        // Rotate the input vector by the camera's eulerAngles
-        Vector3 rotatedInput = Quaternion.Euler(transform.eulerAngles) * new Vector3(horizontalInput, 0, verticalInput);
-
-        Vector3 newPosition = transform.position + rotatedInput * _speed * Time.deltaTime;
-
-        newPosition.x = Mathf.Clamp(newPosition.x, -10f, 10f);
-        newPosition.z = Mathf.Clamp(newPosition.z, -10f, 10f);
-
-        transform.position = newPosition;
+        HandleKeyboardMovement();
     }
 }
