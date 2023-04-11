@@ -10,7 +10,7 @@ public class MMapEditor : Editor
     private SerializedProperty bBasePrefabProp;
     private SerializedProperty mapObjectProp;
     private int selectedMap = 0;
-    private string[] options = new string[] { "Default Map", "Custom Map", "Placeholder" };
+    private string[] options = new string[] { "Default Map", "Password Map", "Password Fork Map" };
     public string inputFieldValue = "R5F3L4B2";
     
     private void OnEnable()
@@ -105,9 +105,37 @@ public class MMapEditor : Editor
                         EditorGUILayout.HelpBox("Map Container is null!", MessageType.Error);
                         return;
                     }
-                    if (!mMap.GenerateMap(mapPassword))
+                    if (!mMap.GeneratePasswordMap(mapPassword))
                     {
-                        EditorGUILayout.HelpBox("GenerateMap failed! check your Debug.LogError", MessageType.Error);
+                        EditorGUILayout.HelpBox("GeneratePasswordMap failed! check your Debug.LogError", MessageType.Error);
+                    }
+                }
+                if (GUILayout.Button("Clear Map"))
+                {
+                    mMap.ClearMap();
+                }
+                break;
+            }
+            case 2:
+            {
+                // Draw the input field in the editor
+                mMapObject.FindProperty("MapPassword").stringValue = 
+                EditorGUILayout.TextField("Map Password", mMapObject.FindProperty("MapPassword").stringValue); //MapPassword
+
+                var mapPassword = mMapObject.FindProperty("MapPassword").stringValue;
+                // Use the input field value in your code as needed
+                // For example, you could use it to set a property value:
+                // mMapObject.FindProperty("myProperty").stringValue = mapPassword;
+                if (GUILayout.Button("Generate Map"))
+                {
+                    if (mMap.mapObject == null)
+                    {
+                        EditorGUILayout.HelpBox("Map Container is null!", MessageType.Error);
+                        return;
+                    }
+                    if (!mMap.GenerateMutilForkPasswordMap(mapPassword))
+                    {
+                        EditorGUILayout.HelpBox("GenerateMutilForkPasswordMap failed! check your Debug.LogError", MessageType.Error);
                     }
                 }
                 if (GUILayout.Button("Clear Map"))
@@ -140,7 +168,7 @@ public class MMapEditor : Editor
             }
             case 1:
             {
-                GUILayout.Label("Custom Map Info");
+                GUILayout.Label("Password Map Info");
                 GUILayout.Label("back	Shorthand for writing Vector3(0, 0, -1).");
                 GUILayout.Label("down	Shorthand for writing Vector3(0, -1, 0).");
                 GUILayout.Label("forward	Shorthand for writing Vector3(0, 0, 1).");
@@ -153,7 +181,16 @@ public class MMapEditor : Editor
             }
             case 2:
             {
-                GUILayout.Label("Placeholder Info");
+                GUILayout.Label("Password Fork Info");
+                GUILayout.Label("Support muti ways map");
+                GUILayout.Label("back	Shorthand for writing Vector3(0, 0, -1).");
+                GUILayout.Label("down	Shorthand for writing Vector3(0, -1, 0).");
+                GUILayout.Label("forward	Shorthand for writing Vector3(0, 0, 1).");
+                GUILayout.Label("left	Shorthand for writing Vector3(-1, 0, 0).");
+                GUILayout.Label("one	Shorthand for writing Vector3(1, 1, 1).");
+                GUILayout.Label("right	Shorthand for writing Vector3(1, 0, 0).");
+                GUILayout.Label("up	Shorthand for writing Vector3(0, 1, 0).");
+                GUILayout.Label("zero	Shorthand for writing Vector3(0, 0, 0).");
                 break;
             }
         }

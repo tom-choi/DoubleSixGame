@@ -20,7 +20,7 @@ public class MMap : MonoBehaviour
     void Awake()
     {
         // GenerateMap();
-        GenerateMap(MapPassword);
+        GenerateMutilForkPasswordMap(MapPassword);
     }
 
     public void AddNode(MapNode newNode, int x, int z)
@@ -69,14 +69,13 @@ public class MMap : MonoBehaviour
     
     private MapNode DecodeMapPassword(MapNode currentNode, string password)
     {
-  
+        // MapPassword = "R10F10L5B5L5"
         string pattern = "^[BDFLORUZ]\\d+$";
         if (Regex.IsMatch(password, pattern))
         {
             throw new ArgumentException("Invalid password format");
         }
 
-        int i = 0;
         foreach (Match match in Regex.Matches(password, @"[BDFLORUZ]\d+"))
         {
             string direction = match.Value.Substring(0, 1);
@@ -111,6 +110,100 @@ public class MMap : MonoBehaviour
             // Debug.Log(match.Value);
         }
         return currentNode;
+    }
+
+    private void DecodeMutilForkMapPassword(MapNode currentNode, string password)
+    {
+        // MapPassword = R10F10[L5B5L5,R5F5]
+        string pattern = "^[BDFLORUZ\\[\\],]+$";
+        if (Regex.IsMatch(password, pattern))
+        {
+            throw new ArgumentException("Invalid password format");
+        }
+
+        int i = 0;
+        bool forked = false;
+        while (i < password.Length)
+        {
+            char c = password[i];
+            if (c == '[')
+            {
+                forked = true;
+                int j = password.IndexOf(']', i);
+                if (j == -1)
+                {
+                    throw new ArgumentException("Invalid password format");
+                }
+                int k = password.IndexOf(',',i);
+                i++;
+                while (k != -1 && k > i)
+                {
+                    string subPassword = password.Substring(i, k - i);
+                    var forkedNode = currentNode;
+                    DecodeMutilForkMapPassword(forkedNode, subPassword);
+                    
+                    i = k + 1;
+                    k = password.IndexOf(',',i);
+                    if (k == -1)
+                    {
+                        k = j;
+                    }
+                }
+                i = j + 1;
+            }
+            else
+            {
+                string direction = c.ToString();
+                i++;
+                while (i < password.Length && char.IsDigit(password[i]))
+                {
+                    direction += password[i];
+                    i++;
+                }
+                int distance = int.Parse(direction.Substring(1));
+                direction = direction.Substring(0, 1);
+                switch(direction)
+                {
+                    case "B":
+                        currentNode = CreateNodes(currentNode, Vector3.back, distance);
+                        break;
+                    case "D":
+                        currentNode = CreateNodes(currentNode, Vector3.down, distance);
+                        break;
+                    case "F":
+                        currentNode = CreateNodes(currentNode, Vector3.forward, distance);
+                        break;
+                    case "L":
+                        currentNode = CreateNodes(currentNode, Vector3.left, distance);
+                        break;
+                    case "O":
+                        currentNode = CreateNodes(currentNode, Vector3.one, distance);
+                        break;
+                    case "R":
+                        currentNode = CreateNodes(currentNode, Vector3.right, distance);
+                        break;
+                    case "U":
+                        currentNode = CreateNodes(currentNode, Vector3.up, distance);
+                        break;
+                    case "Z":
+                        currentNode = CreateNodes(currentNode, Vector3.zero, distance);
+                        break;
+                    default:
+                        throw new ArgumentException("Invalid password format");
+                }
+            }
+        }
+
+        if (!forked)
+        {
+            //创建最后一个节点，默認循環
+            MapNode lastNode = firstNode;
+            InstantiateAndRename(bBasePrefab, currentNode.position, mapObject.transform,
+            "({0},{1})", (int)currentNode.position.x, (int)currentNode.position.z);
+            currentNode.AddNodeInNextNodes(lastNode,0);
+            lastNode.AddNodeInPreNodes(currentNode,0);
+            AddNode(lastNode,(int)lastNode.position.x, (int)lastNode.position.z);
+        }
     }
 
     public bool GenerateMap()
@@ -149,7 +242,7 @@ public class MMap : MonoBehaviour
         return true;
     }
     
-    public bool GenerateMap(string password)
+    public bool GeneratePasswordMap(string password)
     {
         ClearMap();
 
@@ -167,6 +260,20 @@ public class MMap : MonoBehaviour
         currentNode.AddNodeInNextNodes(lastNode,0);
         lastNode.AddNodeInPreNodes(currentNode,0);
         AddNode(lastNode,(int)lastNode.position.x, (int)lastNode.position.z);
+
+        return true;
+    }
+
+    public bool GenerateMutilForkPasswordMap(string password)
+    {
+        ClearMap();
+
+        //创建第一个节点
+        firstNode = CreateFirstNodes();
+        MapNode currentNode = firstNode;
+
+        // 根据密碼生成节点，內置循環
+        DecodeMutilForkMapPassword(currentNode,password);
 
         return true;
     }
