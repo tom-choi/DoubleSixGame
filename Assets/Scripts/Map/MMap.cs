@@ -7,7 +7,13 @@ using System;
 public class MMap : MonoBehaviour
 {
     public MapNode firstNode;
-    public MapNode[,] nodes = new MapNode[30, 30];
+    // TODO : maybe we can improve it, 這裡應該可以再壓縮一下空間?
+    public MapNode[,,] nodes = new MapNode[30, 30,30];
+    // 用法
+    // public void AddNode(MapNode newNode, Vector3 position)
+    // {
+    //     nodes[(int)position.x, (int)position.y, (int)position.z] = newNode;
+    // }
     private int nodeCount = 0;
     
     //其他属性和方法
@@ -23,9 +29,9 @@ public class MMap : MonoBehaviour
         GenerateMutilForkPasswordMap(MapPassword);
     }
 
-    public void AddNode(MapNode newNode, int x, int z)
+    public void AddNode(MapNode newNode,Vector3 position)
     {
-        nodes[x, z] = newNode;
+        nodes[(int)position.x, (int)position.y, (int)position.z] = newNode;
     }
 
     // back	Shorthand for writing Vector3(0, 0, -1).
@@ -199,10 +205,10 @@ public class MMap : MonoBehaviour
             //创建最后一个节点，默認循環
             MapNode lastNode = firstNode;
             InstantiateAndRename(bBasePrefab, currentNode.position, mapObject.transform,
-            "({0},{1})", (int)currentNode.position.x, (int)currentNode.position.z);
+            "({0},{1},{2})");
             currentNode.AddNodeInNextNodes(lastNode,0);
             lastNode.AddNodeInPreNodes(currentNode,0);
-            AddNode(lastNode,(int)lastNode.position.x, (int)lastNode.position.z);
+            AddNode(lastNode,lastNode.position);
         }
     }
 
@@ -234,10 +240,10 @@ public class MMap : MonoBehaviour
         //创建最后一个节点，默認循環
         MapNode lastNode = firstNode;
         InstantiateAndRename(bBasePrefab, currentNode.position, mapObject.transform,
-        "({0},{1})", (int)currentNode.position.x, (int)currentNode.position.z);
+        "({0},{1},{2})");
         currentNode.AddNodeInNextNodes(lastNode,0);
         lastNode.AddNodeInPreNodes(currentNode,0);
-        AddNode(lastNode,(int)lastNode.position.x, (int)lastNode.position.z);
+        AddNode(lastNode,lastNode.position);
 
         return true;
     }
@@ -256,10 +262,10 @@ public class MMap : MonoBehaviour
         //创建最后一个节点，默認循環
         MapNode lastNode = firstNode;
         InstantiateAndRename(bBasePrefab, currentNode.position, mapObject.transform,
-        "({0},{1})", (int)currentNode.position.x, (int)currentNode.position.z);
+        "({0},{1},{2})");
         currentNode.AddNodeInNextNodes(lastNode,0);
         lastNode.AddNodeInPreNodes(currentNode,0);
-        AddNode(lastNode,(int)lastNode.position.x, (int)lastNode.position.z);
+        AddNode(lastNode,lastNode.position);
 
         return true;
     }
@@ -321,8 +327,8 @@ public class MMap : MonoBehaviour
         nodeCount = 1;
         // 创建 BBase 物体的副本，并将其放置在节点的位置
         InstantiateAndRename(bBasePrefab, firstNode.position, mapObject.transform,
-        "({0},{1})", (int)firstNode.position.x, (int)firstNode.position.z);
-        AddNode(firstNode,(int)firstNode.position.x, (int)firstNode.position.z);
+        "({0},{1},{2})");
+        AddNode(firstNode,firstNode.position);
         return firstNode;
     }    
     //其他方法
@@ -336,10 +342,10 @@ public class MMap : MonoBehaviour
                 newNode.position = currentNode.position + increment;
                 newNode.mapEventType = MapEventType.Normal;
                 InstantiateAndRename(bBasePrefab, currentNode.position, mapObject.transform,
-                    "({0},{1})", (int)currentNode.position.x, (int)currentNode.position.z);
+                    "({0},{1},{2})");
                 
                 // connect
-                AddNode(newNode,(int)currentNode.position.x, (int)currentNode.position.z);
+                AddNode(newNode,newNode.position);
                 currentNode.AddNodeInNextNodes(newNode,0);
                 newNode.AddNodeInPreNodes(currentNode,0);
                 
@@ -359,10 +365,10 @@ public class MMap : MonoBehaviour
             newNode.position = currentNode.position + nodeIncrements;
             newNode.mapEventType = MapEventType.Normal;
             InstantiateAndRename(bBasePrefab, currentNode.position, mapObject.transform,
-                "({0},{1})", (int)currentNode.position.x, (int)currentNode.position.z);
+                "({0},{1},{2})");
             
             // connect
-            AddNode(newNode,(int)currentNode.position.x, (int)currentNode.position.z);
+            AddNode(newNode,newNode.position);
             currentNode.AddNodeInNextNodes(newNode,0);
             newNode.AddNodeInPreNodes(currentNode,0);
             
@@ -373,10 +379,10 @@ public class MMap : MonoBehaviour
         return currentNode;
     }
 
-    private void InstantiateAndRename(GameObject prefab, Vector3 position,Transform parentTransform, string nameFormat, int i, int j)
+    private void InstantiateAndRename(GameObject prefab, Vector3 position,Transform parentTransform, string nameFormat)
     {
         GameObject instance = Instantiate(prefab, position, Quaternion.identity, parentTransform);
-        instance.name = string.Format(nameFormat, i, j);
+        instance.name = string.Format(nameFormat, (int)position.x, (int)position.y,(int)position.z);
 
         // Add code here to find the instance named "GameController"
         GameObject gameController = GameObject.Find("GameController");
