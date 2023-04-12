@@ -13,15 +13,18 @@ MonoBehaviour:
   m_Name: ddd
   m_EditorClassIdentifier: 
   NodeLinks:
-  - BaseNodeGUID: c494f7e7-f080-4372-ac57-35739feba7d2
+  - BaseNodeGUID: 21c43ac0-9198-4324-9eda-906eec9f97fe
+    PortName: Port
+    TargetNodeGUID: 36c4d4b7-a0cf-4eeb-8f1d-3e39baa59db7
+  - BaseNodeGUID: 21c43ac0-9198-4324-9eda-906eec9f97fe
     PortName: Next
-    TargetNodeGUID: 46770ffd-147f-48b2-9d5e-18a94a74172e
-  - BaseNodeGUID: 46770ffd-147f-48b2-9d5e-18a94a74172e
-    PortName: "\u51FA\u53E3"
-    TargetNodeGUID: 8ff61daa-f9ea-4696-8f21-c573f56b1a5c
-  DialogueNodeData:
-  - NodeGUID: 8ff61daa-f9ea-4696-8f21-c573f56b1a5c
-    DialogueText: Goodbye World
-    Position: {x: 529.3333, y: 200}
+    TargetNodeGUID: 21c43ac0-9198-4324-9eda-906eec9f97fe
+  - BaseNodeGUID: 21c43ac0-9198-4324-9eda-906eec9f97fe
+    PortName: Port
+    TargetNodeGUID: c9d9365f-ec80-47bb-97be-356e71bb79e6
+  - BaseNodeGUID: c9d9365f-ec80-47bb-97be-356e71bb79e6
+    PortName: Port
+    TargetNodeGUID: 36c4d4b7-a0cf-4eeb-8f1d-3e39baa59db7
+  DialogueNodeData: []
   ExposedProperties: []
   CommentBlockData: []

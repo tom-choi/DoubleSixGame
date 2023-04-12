@@ -47,6 +47,16 @@ public class MapNode
         int randomIndex = UnityEngine.Random.Range(0, nodeList.Count);
         return nodeList[randomIndex];
     }
+    public MapNode GetNextNode(int idx)
+    {
+        if (NextNodesIsEmpty())
+        {
+            return null;
+        }
+        List<MapNode> nodeList = ReConstractDict();
+        if (idx >= nodeList.Count) return null;
+        return nodeList[idx];
+    }
 
 
     // 添加事件委托类型的成员变量，當玩家進入地塊的時候
