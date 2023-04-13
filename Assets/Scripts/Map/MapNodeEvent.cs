@@ -9,3 +9,15 @@ public delegate void MapNodeEvent(MapNode node);
 //     // 在这里添加触发事件的逻辑
 // };
 
+public class MapEvent
+{
+    public MapEventType mapEventType;
+    public string eventMessage;
+
+    public MapEvent(MapEventType type, string message)
+    {
+        mapEventType = type;
+        eventMessage = message;
+    }
+}
+

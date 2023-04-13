@@ -11,7 +11,7 @@ public class TestingEvent
     }
     public void AnotherMethod(MapNode node)
     {
-        Debug.Log($"This is AnotherMethod()");
+        // Debug.Log($"This is AnotherMethod()");
     }
     public void CurrentNodePosition(MapNode node)
     {
