@@ -5998,7 +5998,7 @@ MonoBehaviour:
   _doGlobalLayout: 1
   _camera: {fileID: 963194227}
   _renderFeature: {fileID: -4689416543811122699, guid: fa3f5b9d4f50c334e9316b839092ca3f, type: 2}
-  _rendererType: 1
+  _rendererType: 0
   _platformType: 0
   _initialConfiguration:
     KeyboardNavigation: 0
@@ -6016,8 +6016,8 @@ MonoBehaviour:
     ResizeFromEdges: 1
     MoveFromTitleOnly: 0
     MemoryCompactTimer: 60
-  _fontAtlasConfiguration: {fileID: 11400000, guid: bb3b0afdf6c551a43bc8932a52e13815, type: 2}
-  _iniSettings: {fileID: 11400000, guid: 670852c70db7ee342a675155985216c8, type: 2}
+  _fontAtlasConfiguration: {fileID: 11400000, guid: 8b8aa0662de0f7b4fa77b577efaf12b8, type: 2}
+  _iniSettings: {fileID: 11400000, guid: 4ae8601de1a10764187ea2d85ba8e37c, type: 2}
   _shaders: {fileID: 11400000, guid: 9c25b437bdcfe95449d0617c2f2ee93d, type: 2}
   _style: {fileID: 11400000, guid: 2f5e7cc338c3ffc4caddb08baa576db2, type: 2}
   _cursorShapes: {fileID: 11400000, guid: 79f57b40c6f98a5418bdf959f1061379, type: 2}
