@@ -22,6 +22,22 @@ public class MapNode
     {
         preNodes.Add(node,level);
     }
+    
+    public void RemoveNodeFromNextNodes(MapNode node)
+    {
+        if (nextNodes.ContainsKey(node))
+        {
+            nextNodes.Remove(node);
+        }
+    }
+
+    public void RemoveNodeFromPreNodes(MapNode node)
+    {
+        if (preNodes.ContainsKey(node))
+        {
+            preNodes.Remove(node);
+        }
+    }
 
     public bool NextNodesIsEmpty()
     {
