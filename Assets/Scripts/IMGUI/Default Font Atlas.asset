@@ -14,4 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Rasterizer: 0
   RasterizerFlags: 0
-  Fonts: []
+  Fonts:
+  - _fontAsset: {fileID: 102900000, guid: 2d517df7f488cd343b272115365883f5, type: 3}
+    FontPath: Fonts/VT323/VT323-Regular.ttf
+    Config:
+      FontIndexInFile: 0
+      SizeInPixels: 8
+      Oversample: {x: 3, y: 1}
+      PixelSnapH: 0
+      GlyphExtraSpacing: {x: 0, y: 0}
+      GlyphOffset: {x: 0, y: 0}
+      GlyphRanges: 0
+      GlyphMinAdvanceX: 0
+      GlyphMaxAdvanceX: 3.4028235e+38
+      MergeIntoPrevious: 0
+      RasterizerFlags: 0
+      RasterizerMultiply: 1
+      EllipsisChar: 65535
+      CustomGlyphRanges: []
