@@ -122,11 +122,12 @@ public class MapNode
         // this.onPlayerEnter += AnotherMethod;
 
         TestingEvent testingEvent = new TestingEvent();
-        this.onPlayerEnter += testingEvent.OnSomeoneEnterNode;
-        this.onPlayerEnter += testingEvent.AnotherMethod;
+        // this.onPlayerEnter += testingEvent.OnSomeoneEnterNode;
+        this.onPlayerEnter += testingEvent.NullMethod;
         this.onPlayerEnterWithMessage += testingEvent.OnPlayerEnterNode;
 
         this.onplayerPassed += testingEvent.CurrentNodePosition;
+        this.onplayerPassedWithMessage += testingEvent.NullMethod;
         
         // but not void
         // this.onPlayerEnter += VoidMethod;

@@ -14,13 +14,21 @@ public class TestingEvent
         Debug.Log($"{name} at position {node.position}");
         // Add trigger event logic here
     }
-    public void AnotherMethod(MapNode node)
+    public void NullMethod(MapNode node)
+    {
+        // Debug.Log($"This is AnotherMethod()");
+    }
+    public void NullMethod(MapNode node,string message)
     {
         // Debug.Log($"This is AnotherMethod()");
     }
     public void CurrentNodePosition(MapNode node)
     {
         Debug.Log($"{node.position}");
+    }
+    public void RedMethod(MapNode node)
+    {
+        Debug.Log($"This is RedMethod");
     }
     
 }

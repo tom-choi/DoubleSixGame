@@ -88,6 +88,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Event triggered
+        currentNode.PlayerEntered();
         currentNode.PlayerEntered(this.playerName);
         
     }
@@ -113,6 +114,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Event triggered
+        currentNode.PlayerEntered();
         currentNode.PlayerEntered(this.playerName);
         
     }
@@ -123,6 +125,7 @@ public class PlayerController : MonoBehaviour
         {
             currentNode = currentNode.GetRandomNextNode();
             currentNode.PlayerPassed();
+            currentNode.PlayerPassed(this.playerName);
             Vector3 targetPosition = currentNode.position + new Vector3(0,0.5f,0);
             StartCoroutine(MoveToNode(targetPosition));
             
