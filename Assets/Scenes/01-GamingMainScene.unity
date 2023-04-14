@@ -974,7 +974,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 526181973}
-  name: Sam
+  playerName: Player
   moveSpeed: 2.5
   moveTime: 0.5
   isAI: 0
@@ -2450,7 +2450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 526181973}
-  name: AI3
+  playerName: AIPlayer (3)
   moveSpeed: 2.5
   moveTime: 0.5
   isAI: 1
@@ -2925,7 +2925,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 526181973}
-  name: AI1
+  playerName: AIPlayer (1)
   moveSpeed: 2.5
   moveTime: 0.5
   isAI: 1
@@ -5063,7 +5063,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 526181973}
-  name: AI2
+  playerName: AIPlayer (2)
   moveSpeed: 2.5
   moveTime: 0.5
   isAI: 1
