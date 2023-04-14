@@ -68,6 +68,8 @@ public class MapNode
     // 添加事件委托类型的成员变量，當玩家進入地塊的時候
     public MapNodeEvent onPlayerEnter;
     public MapNodeEvent onplayerPassed;
+    public MapNodeEventWithMessage onPlayerEnterWithMessage;
+    public MapNodeEventWithMessage onplayerPassedWithMessage;
     public void PlayerEntered()
     {
         if (onPlayerEnter != null)
@@ -75,11 +77,25 @@ public class MapNode
             onPlayerEnter(this);
         }
     }
+    public void PlayerEntered(string message)
+    {
+        if (onPlayerEnter != null)
+        {
+            onPlayerEnterWithMessage(this,message);
+        }
+    }
     public void PlayerPassed()
     {
         if (onplayerPassed != null)
         {
             onplayerPassed(this);
+        }
+    }
+    public void PlayerPassed(string message)
+    {
+        if (onplayerPassed != null)
+        {
+            onplayerPassedWithMessage(this,message);
         }
     }
 
@@ -106,8 +122,9 @@ public class MapNode
         // this.onPlayerEnter += AnotherMethod;
 
         TestingEvent testingEvent = new TestingEvent();
-        this.onPlayerEnter += testingEvent.OnPlayerEnterNode;
+        this.onPlayerEnter += testingEvent.OnSomeoneEnterNode;
         this.onPlayerEnter += testingEvent.AnotherMethod;
+        this.onPlayerEnterWithMessage += testingEvent.OnPlayerEnterNode;
 
         this.onplayerPassed += testingEvent.CurrentNodePosition;
         

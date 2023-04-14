@@ -341,6 +341,7 @@ public class MMap : MonoBehaviour
                 MapNode newNode = new MapNode();
                 newNode.position = currentNode.position + increment;
                 newNode.mapEventType = MapEventType.Normal;
+                
                 InstantiateAndRename(bBasePrefab, currentNode.position, mapObject.transform,
                     "({0},{1},{2})");
                 

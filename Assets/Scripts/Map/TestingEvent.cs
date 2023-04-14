@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class TestingEvent
 {
-    public void OnPlayerEnterNode(MapNode node)
+    public void OnSomeoneEnterNode(MapNode node)
     {
-        Debug.Log($"Player entered node {node.position}");
+        Debug.Log($"Someone at position {node.position}");
+        // Add trigger event logic here
+    }
+    public void OnPlayerEnterNode(MapNode node,string name)
+    {
+        Debug.Log($"{name} at position {node.position}");
         // Add trigger event logic here
     }
     public void AnotherMethod(MapNode node)

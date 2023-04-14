@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public MMap map;
+    public string playerName;
     public float moveSpeed = 2.5f;
     public float moveTime = 0.75f;
     private float moveWaitTime;
@@ -75,7 +76,7 @@ public class PlayerController : MonoBehaviour
 
         LoseMyDice();
 
-        int result = dice.PlayerRoll("Player");
+        int result = dice.PlayerRoll(this.playerName);
         tmpDiceResult = result;
         // play animation
 
@@ -87,7 +88,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Event triggered
-        currentNode.PlayerEntered();
+        currentNode.PlayerEntered(this.playerName);
         
     }
 
@@ -100,7 +101,7 @@ public class PlayerController : MonoBehaviour
 
         LoseMyDice();
 
-        int result = dice.PlayerRoll("AI");
+        int result = dice.PlayerRoll(this.playerName);
         tmpDiceResult = result;
         // play animation
 
@@ -112,7 +113,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Event triggered
-        currentNode.PlayerEntered();
+        currentNode.PlayerEntered(this.playerName);
         
     }
 
