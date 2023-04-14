@@ -341,6 +341,7 @@ public class MMap : MonoBehaviour
                 MapNode newNode = new MapNode();
                 newNode.position = currentNode.position + increment;
                 newNode.mapEventType = MapEventType.Normal;
+                
                 InstantiateAndRename(bBasePrefab, currentNode.position, mapObject.transform,
                     "({0},{1},{2})");
                 
@@ -364,8 +365,8 @@ public class MMap : MonoBehaviour
             MapNode newNode = new MapNode();
             newNode.position = currentNode.position + nodeIncrements;
             newNode.mapEventType = MapEventType.Normal;
-            InstantiateAndRename(bBasePrefab, currentNode.position, mapObject.transform,
-                "({0},{1},{2})");
+            newNode = InstantiateAndRename(bBasePrefab, currentNode.position, mapObject.transform,
+                "({0},{1},{2})",newNode);
             
             // connect
             AddNode(newNode,newNode.position);
@@ -396,7 +397,37 @@ public class MMap : MonoBehaviour
 
         instance.GetComponent<Renderer>().material = gameController.GetComponent<GameController>().GetRandomMaterials();
 
-        
         // Add code here to change the color of the gameobject instance
+    }
+    private MapNode InstantiateAndRename(GameObject prefab, Vector3 position,Transform parentTransform, string nameFormat, MapNode mapNode)
+    {
+        GameObject instance = Instantiate(prefab, position, Quaternion.identity, parentTransform);
+        instance.name = string.Format(nameFormat, (int)position.x, (int)position.y,(int)position.z);
+
+        // Add code here to find the instance named "GameController"
+        GameObject gameController = GameObject.Find("GameController");
+
+        // Set default color to red
+        instance.GetComponent<Renderer>().material = gameController.GetComponent<GameController>().GetFirstMaterials();
+        
+
+        // Set random rainbow color
+        // Color[] rainbowColors = new Color[] { Color.red, Color.yellow, Color.green, Color.blue, Color.cyan, Color.magenta, Color.white };
+
+        instance.GetComponent<Renderer>().material = gameController.GetComponent<GameController>().GetRandomMaterials();
+
+        // Add code here to change the color of the gameobject instance
+        String materialName = instance.GetComponent<Renderer>().material.name;
+        TestingEvent testingEvent = new TestingEvent();
+        // Debug.Log(materialName);
+        switch (materialName)
+        {
+            case "RedMaterial (Instance)":
+                mapNode.onPlayerEnter += testingEvent.RedMethod;
+                break;
+            default:
+                break;
+        }
+        return mapNode;
     }
 }

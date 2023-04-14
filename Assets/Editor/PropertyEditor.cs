@@ -1,55 +1,74 @@
-using UnityEngine;
 using UnityEditor;
-using System.Collections.Generic;
+using UnityEngine;
 
-public class PropertyEditor : EditorWindow
+[CustomEditor(typeof(CustomProperty))]
+public class CustomPropertyEditor : Editor
 {
-    private int id;
-    private string propertyName;
-    private float price;
-    private int level;
-    private string owner;
-    private float rent;
+    string[] DataType = new string[] { "String", "Int", "Float" };
+    int selectedIndex = 0;
+    private CustomProperty customProperty;
+    private SerializedObject propertyObject;
+    private SerializedProperty propertyName;
+    private SerializedProperty value;
 
-    private List<Property> properties = new List<Property>();
-
-    [MenuItem("Window/Property Editor")]
-    public static void ShowWindow()
+    private void OnEnable()
     {
-        EditorWindow.GetWindow(typeof(PropertyEditor));
+        this.customProperty = (CustomProperty)target;
+        this.propertyObject = new SerializedObject(target);
+
+        this.propertyName = propertyObject.FindProperty("propertyName");
+        this.value = propertyObject.FindProperty("value");
     }
-
-    void OnGUI()
+    public override void OnInspectorGUI()
     {
-        GUILayout.Label("Add New Property", EditorStyles.boldLabel);
+        base.OnInspectorGUI();
 
-        id = EditorGUILayout.IntField("ID", id);
-        name = EditorGUILayout.TextField("Name", name);
-        price = EditorGUILayout.FloatField("Price", price);
-        level = EditorGUILayout.IntField("Level", level);
-        owner = EditorGUILayout.TextField("Owner", owner);
-        rent = EditorGUILayout.FloatField("Rent", rent);
+        CustomProperty customProperty = (CustomProperty)target;
 
-        if (GUILayout.Button("Add Property"))
+        // if (GUILayout.Button("Check All Properties"))
+        // {
+        //     customProperty.CheckAllPorperty();
+        // }
+
+        GUILayout.Space(10);
+
+        GUILayout.Label("Set Property:");
+
+        selectedIndex = EditorGUILayout.Popup("DataType", selectedIndex, DataType);
+        EditorGUILayout.PropertyField(propertyName);
+        EditorGUILayout.PropertyField(value);
+
+        if (GUILayout.Button("Set"))
         {
-            Property newProperty = new Property(id, name, price, level, owner, rent);
-            properties.Add(newProperty);
-
-            id = 0;
-            name = "";
-            price = 0f;
-            level = 0;
-            owner = "";
-            rent = 0f;
+            string datatype = DataType[selectedIndex];
+            switch (datatype)
+            {
+                case "String":
+                    customProperty.SetProperty(propertyName.stringValue, value.stringValue);
+                    break;
+                case "Int":
+                    customProperty.SetProperty(propertyName.stringValue, value.intValue);
+                    break;
+                case "Float":
+                    customProperty.SetProperty(propertyName.stringValue, value.floatValue);
+                    break;
+            }
         }
 
-        GUILayout.Space(20);
+        GUILayout.Space(10);
 
-        GUILayout.Label("Properties", EditorStyles.boldLabel);
+        GUILayout.Label("Get Property:");
 
-        foreach (Property property in properties)
+        // propertyName = EditorGUILayout.TextField("Name", "");
+
+        if (GUILayout.Button("Get"))
         {
-            GUILayout.Label(property.name);
+            // object value = customProperty.GetProperty<object>(propertyName);
+
+            // if (value != null)
+            // {
+            //     EditorGUILayout.LabelField("Value", value.ToString());
+            // }
         }
     }
 }
