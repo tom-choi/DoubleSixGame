@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public enum AssetType { RealEstate, Stock, Bonus };
 
@@ -48,4 +49,35 @@ public class PlayerInfo
         public int status;
     }
     public PlayerStatus playerStatus;
+}
+
+public class testingCharacter
+{    
+    string json;
+    PlayerInfo player;
+    public testingCharacter()
+    {
+        json = @"
+        { 
+            ""playerID"": 1, 
+            ""playerName"": ""John"",
+            ""playerPosition"": { ""x"": 2, ""y"": 3},
+            ""cashAmount"": 5000,
+            ""assets"": [
+                { ""name"": ""House"", ""value"": 200000 }, 
+                { ""name"": ""Car"", ""value"": 50000 }
+            ],
+            ""playerStatus"": {
+                ""playerID"": 1, 
+                ""playerName"": ""John"",
+                ""goldCoins"": 100, 
+                ""points"": 120,
+                ""position"": 5,
+                ""status"": 1 
+            } 
+        }";
+        player = JsonConvert.DeserializeObject<PlayerInfo>(json);
+        Debug.Log(player);
+    }
+    
 }

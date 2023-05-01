@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class TestingSS : MonoBehaviour
 {
-    
+    void Start()
+    {
+        //testingCharacter tt = new testingCharacter();
+    }
 }
