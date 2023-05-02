@@ -49,35 +49,31 @@ public class PlayerInfo
         public int status;
     }
     public PlayerStatus playerStatus;
+    public PlayerInfo()
+    {
+        this.playerID = 1;
+        this.playerName = "John";
+        this.playerPosition = new Vector2Int(0, 0);
+        this.cashAmount = 1000;
+        this.assets = new List<Asset>();
+        this.playerStatus = new PlayerInfo.PlayerStatus();
+        this.playerStatus.playerID = 1;
+        this.playerStatus.playerName = "John";
+        this.playerStatus.goldCoins = 10;
+        this.playerStatus.points = 0;
+        this.playerStatus.position = 0;
+        this.playerStatus.status = 0;
+    }
 }
 
 public class testingCharacter
 {    
     string json;
-    PlayerInfo player;
+    PlayerInfo playerinfo = new PlayerInfo();
     public testingCharacter()
     {
-        json = @"
-        { 
-            ""playerID"": 1, 
-            ""playerName"": ""John"",
-            ""playerPosition"": { ""x"": 2, ""y"": 3},
-            ""cashAmount"": 5000,
-            ""assets"": [
-                { ""name"": ""House"", ""value"": 200000 }, 
-                { ""name"": ""Car"", ""value"": 50000 }
-            ],
-            ""playerStatus"": {
-                ""playerID"": 1, 
-                ""playerName"": ""John"",
-                ""goldCoins"": 100, 
-                ""points"": 120,
-                ""position"": 5,
-                ""status"": 1 
-            } 
-        }";
-        player = JsonConvert.DeserializeObject<PlayerInfo>(json);
-        Debug.Log(player);
+        string myjson = JsonUtility.ToJson(this.playerinfo);
+        PlayerPrefs.SetString("saveData", json);
     }
     
 }
