@@ -9,7 +9,10 @@ public enum MapEventType
     None,
     Start,
     Normal,
-    End
+    End,
+    EnemyEncounter,
+    TreasureFound,
+    Dialogue
 }
 
 public class Map
