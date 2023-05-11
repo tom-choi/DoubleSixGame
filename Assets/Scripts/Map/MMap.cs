@@ -34,6 +34,24 @@ public class MMap : MonoBehaviour
         nodes[(int)position.x, (int)position.y, (int)position.z] = newNode;
     }
 
+    public MapNode GetRandomNonEmptyNode()
+    {
+        List<MapNode> nonEmptyNodes = new List<MapNode>();
+        foreach (MapNode node in nodes)
+        {
+            if (node != null)
+            {
+                nonEmptyNodes.Add(node);
+            }
+        }
+        if (nonEmptyNodes.Count == 0)
+        {
+            return null;
+        }
+        int randomIndex = UnityEngine.Random.Range(0, nonEmptyNodes.Count);
+        return nonEmptyNodes[randomIndex];
+    }
+
     // back	Shorthand for writing Vector3(0, 0, -1).
     // down	Shorthand for writing Vector3(0, -1, 0).
     // forward	Shorthand for writing Vector3(0, 0, 1).

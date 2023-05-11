@@ -75,5 +75,4 @@ public class testingCharacter
         string myjson = JsonUtility.ToJson(this.playerinfo);
         PlayerPrefs.SetString("saveData", json);
     }
-    
 }
