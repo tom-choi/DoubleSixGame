@@ -24,6 +24,8 @@ public class MapLockManager
     {
         MapLock[] locks = new MapLock[2];
         locks[0] = new MapLock(3, true);
+        locks[1] = new MapLock(4, true);
+        MapLock currentLock = new MapLock(locks,2, true);
         AddMapLock(locks[0],0);
         AddMapLock(locks[1],1);
         AddMapLock(locks,2);
