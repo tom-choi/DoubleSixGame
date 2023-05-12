@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     public bool isAI = false;
 
     //其他属性和方法
+    // 行動隊列
+    private List<string> PassedNode = new List<string>();
 
     void Start()
     {
@@ -132,6 +134,16 @@ public class PlayerController : MonoBehaviour
         if (!currentNode.NextNodesIsEmpty())
         {
             currentNode = currentNode.GetRandomNextNode();
+
+            //
+            PassedNode.Add(currentNode.position.ToString());
+            
+            // Loop through the PassedNode list and print each item to the console
+            foreach (string node in PassedNode)
+            {
+                Debug.Log(node);
+            }
+
             currentNode.PlayerPassed();
             currentNode.PlayerPassed(this.playerName);
             Vector3 targetPosition = currentNode.position + new Vector3(0,0.5f,0);
