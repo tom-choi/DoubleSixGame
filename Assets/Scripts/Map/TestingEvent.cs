@@ -30,7 +30,6 @@ public class TestingEvent
     {
         Debug.Log($"This is RedMethod");
     }
-    
 }
 
 // In the Property class:

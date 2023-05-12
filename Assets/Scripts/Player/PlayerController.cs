@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     public bool isAI = false;
 
     //其他属性和方法
+    // 行動隊列
+    private List<string> PassedNode = new List<string>();
 
     void Start()
     {
@@ -106,11 +108,19 @@ public class PlayerController : MonoBehaviour
         tmpDiceResult = result;
         // play animation
 
-        //
+        // movement function
         for (int i = 0; i < result; i++)
         {
             yield return new WaitForSeconds(moveWaitTime);
             MoveToNextNode();
+        }
+
+        // exmovement function
+        bool exmovement = true;
+        if (exmovement)
+        {
+            yield return new WaitForSeconds(moveWaitTime);
+            MoveToTargetNode(map.GetRandomNonEmptyNode());
         }
 
         // Event triggered
@@ -124,11 +134,32 @@ public class PlayerController : MonoBehaviour
         if (!currentNode.NextNodesIsEmpty())
         {
             currentNode = currentNode.GetRandomNextNode();
+
+            //
+            PassedNode.Add(currentNode.position.ToString());
+            
+            // Loop through the PassedNode list and print each item to the console
+            foreach (string node in PassedNode)
+            {
+                Debug.Log(node);
+            }
+
             currentNode.PlayerPassed();
             currentNode.PlayerPassed(this.playerName);
             Vector3 targetPosition = currentNode.position + new Vector3(0,0.5f,0);
             StartCoroutine(MoveToNode(targetPosition));
-            
+        }
+    }
+
+    void MoveToTargetNode(MapNode targetNode)
+    {
+        if (targetNode != null)
+        {
+            currentNode = targetNode;
+            currentNode.PlayerPassed();
+            currentNode.PlayerPassed(this.playerName);
+            Vector3 targetPosition = currentNode.position + new Vector3(0,0.5f,0);
+            StartCoroutine(MoveToNode(targetPosition));
         }
     }
 

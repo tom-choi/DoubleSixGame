@@ -11,6 +11,7 @@ public class CustomProperty : MonoBehaviour
 
     void Awake()
     {
+        
     }
     
     public void SetProperty(string propertyName, string value)

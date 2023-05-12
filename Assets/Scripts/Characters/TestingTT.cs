@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestingSS : MonoBehaviour
+public class TestingTT : MonoBehaviour
 {
     void Start()
     {
-        //testingCharacter tt = new testingCharacter();
+        testingCharacter tt = new testingCharacter();
     }
 }
