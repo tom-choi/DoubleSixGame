@@ -23,10 +23,21 @@ public class MapLockManager
     MapLockManager()
     {
         MapLock[] locks = new MapLock[2];
-        locks[0] = new MapLock(0, true);
-        locks[1] = new MapLock(0, true);
-        MapLock currentLock = new MapLock(locks, true);
-        AddMapLock(new MapLock(5, true),0);
-        AddMapLock(new MapLock(5, true),1);
+        locks[0] = new MapLock(3, true);
+        AddMapLock(locks[0],0);
+        AddMapLock(locks[1],1);
+        AddMapLock(locks,2);
+
+        locks[0].UnlockTheLock();
+        locks[0].UnlockTheLock();
+        locks[0].UnlockTheLock();
+        
+        currentLock.UnlockTheLock();
+
+        locks[1].UnlockTheLock();
+        locks[1].UnlockTheLock();
+        locks[1].UnlockTheLock();
+
+        currentLock.UnlockTheLock();
     }
 }

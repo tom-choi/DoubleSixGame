@@ -24,9 +24,10 @@ public class MapLock
         mapLockMode = MapLockMode.PV_mode;
     }
     
-    public MapLock(MapLock[] ml, bool islock)
+    public MapLock(MapLock[] ml,int pv, bool islock)
     {
         this.ML = ml;
+        this.PV = pv;
         this.isLock = islock;
         mapLockMode = MapLockMode.Required_mode;
     }
@@ -48,35 +49,56 @@ public class MapLock
     }
     private void ReducePV()
     {
+        if (CheckPV() == 0) return;
         this.PV--;
+    }
+    private int CheckPV()
+    {
+        return this.PV;
     }
     private string CheckMapLockMode()
     {
         return mapLockMode.ToString();
     }
-
     public void UnlockTheLock()
     {
         string mode = CheckMapLockMode();
-        switch(mode)
-        {
-            case "PV_mode":
-                ReducePV();
-                break;
-            case "Required_mode":
-                foreach(var ml in ML)
-                {
-                    if (ml.CheckIsLocked())
+        bool succRedflag = true;
+        bool succUnlockflag = false;
+        bool alreadyUnlockflag = false;
+        if (CheckPV() != 0)
+            switch(mode)
+            {
+                case "PV_mode":
+                    ReducePV();
+                    break;
+                case "Required_mode":
+                    foreach(var ml in ML)
                     {
-                        Debug.Log("The previous locks have not implemented yet");
-                        break;
+                        if (ml.CheckIsLocked())
+                        {
+                            Debug.Log("The previous locks have not implemented yet");
+                            succRedflag = false;
+                            break;
+                        }
                     }
-                }
-                ReducePV();
-                break;
-            default:
-                Debug.Log("mapLockMode has not implemented yet");
-                break;
+                    ReducePV();
+                    if (CheckPV() == 0) succUnlockflag = true;
+                    break;
+                default:
+                    Debug.Log("mapLockMode has not implemented yet");
+                    succRedflag = false;
+                    break;
+            }
+        else
+        {
+            succRedflag = false;
+            alreadyUnlockflag = true;
         }
+
+        if (succRedflag) Debug.Log("lock unlocked remained " + CheckPV() + " PV");
+        if (succUnlockflag) Debug.Log("lock unlocked succ");
+        if (alreadyUnlockflag) Debug.Log("lock already unlocked");
+
     }
 }
