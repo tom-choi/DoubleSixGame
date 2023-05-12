@@ -28,7 +28,7 @@ public class MapLockManager
         MapLock currentLock = new MapLock(locks,2, true);
         AddMapLock(locks[0],0);
         AddMapLock(locks[1],1);
-        AddMapLock(locks,2);
+        AddMapLock(currentLock,2);
 
         locks[0].UnlockTheLock();
         locks[0].UnlockTheLock();
