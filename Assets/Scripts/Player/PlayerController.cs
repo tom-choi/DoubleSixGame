@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // exmovement function
-        bool exmovement = true;
+        bool exmovement = false;
         if (exmovement)
         {
             yield return new WaitForSeconds(moveWaitTime);
