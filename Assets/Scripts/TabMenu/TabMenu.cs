@@ -7,10 +7,12 @@ public class TabMenu : MonoBehaviour
 {
     public GameObject menu; // Reference to the menu GameObject
     public GameObject CharacterImage; // CG 
+    public bool TabFlag = false;
     private bool isAnimating = false; // Flag to track whether the animation is currently running
     private float animationDuration = 0.3f; // Duration of the animation in seconds
     private float animationStartTime; // Time at which the animation started
     private Vector3 OrgPosition;
+
     void Start()
     {
         OrgPosition = CharacterImage.transform.position;
@@ -26,7 +28,7 @@ public class TabMenu : MonoBehaviour
 
     void LateUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab) || TabFlag)
         {
             // Toggle the menu on/off
             menu.SetActive(!menu.activeSelf);
@@ -37,6 +39,7 @@ public class TabMenu : MonoBehaviour
                 isAnimating = true;
                 animationStartTime = Time.time;
             }
+            TabFlag = false;
         }
 
         // If the animation is running, update the alpha value of the CharacterImage
