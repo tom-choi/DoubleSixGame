@@ -8,14 +8,14 @@ public class Dice : MonoBehaviour
     public int minValue = 1;
     public int maxValue = 7;
 
-    [SerializeField] MessageUpdater messageUpdater = new MessageUpdater();
-    [SerializeField] TextMeshProUGUI channel;
+    [SerializeField] MessageUpdater console_messageUpdater = new MessageUpdater();
+    [SerializeField] TextMeshProUGUI console_channel;
 
     private void Awake() 
     {
-        if (messageUpdater != null) 
+        if (console_messageUpdater != null) 
         {
-            messageUpdater.SetUpMessageUpdater(channel);
+            console_messageUpdater.SetUpMessageUpdater(console_channel);
         }
     }
     public int Roll()
@@ -26,13 +26,12 @@ public class Dice : MonoBehaviour
     public int PlayerRoll(string playerName)
     {
         int tmp = Roll();
-        if (messageUpdater != null) 
+        if (console_messageUpdater != null) 
         {
-            messageUpdater.AddMessage(playerName + " roll " + result.ToString() + " !");
+            console_messageUpdater.AddMessage(playerName + " roll " + result.ToString() + " !");
         }
         return result;
     }
-
     public int GetResult()
     {
         return result;

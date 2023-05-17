@@ -7,7 +7,7 @@ public class MessageUpdater
 {
     [SerializeField] TextMeshProUGUI m_Object;
     private Queue<string> messageHistory = new Queue<string>();
-    private int maxMessages = 10;
+    public int maxMessages = 10;
 
     public void SetUpMessageUpdater(TextMeshProUGUI m_Object)
     {

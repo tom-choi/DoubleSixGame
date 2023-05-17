@@ -57,12 +57,12 @@ Material:
     - _DstBlend: 10
     - _QueueControl: 0
     - _QueueOffset: -19
-    - _Scale: 1.05
+    - _Scale: 1.1
     - _SrcBlend: 5
     - _Surface: 1
     - _ZTest: 4
     - _ZWrite: 0
     - _ZWriteControl: 0
     m_Colors:
-    - _Color: {r: 0.22352941, g: 0.64705884, b: 0.88235295, a: 0}
+    - _Color: {r: 1.5779499, g: 0.05437017, b: 0.024810372, a: 0}
   m_BuildTextureStacks: []

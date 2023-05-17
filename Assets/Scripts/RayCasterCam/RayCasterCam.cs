@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System;
 
 
 public class RayCasterCam : MonoBehaviour
@@ -8,11 +10,21 @@ public class RayCasterCam : MonoBehaviour
     public List<GameObject> loseFocus; // 失焦的游戏对象
     private RaycastHit hit; // 碰撞信息
     public Material OutlineEffect;
+
+    [SerializeField] MessageUpdater block_messageUpdater = new MessageUpdater();
+    [SerializeField] TextMeshProUGUI block_channel;
  
-    private void Start() {
+    private void Start() 
+    {
         targets = new List<GameObject>();
         loseFocus = new List<GameObject>();
         hit = new RaycastHit();
+
+        if (block_messageUpdater != null) 
+        {
+            block_messageUpdater.SetUpMessageUpdater(block_channel);
+            block_messageUpdater.maxMessages = 1;
+        }
     }
  
     private void Update() {
@@ -55,6 +67,17 @@ public class RayCasterCam : MonoBehaviour
         if (targets.Count == 1 && targets[0].name == "Player")
         {
             tabMenu.TabFlag = true;
+        }
+        if (block_messageUpdater != null) 
+        {
+            try 
+            {
+                block_messageUpdater.AddMessage(targets[0].name);
+            }
+            catch (Exception e)
+            {
+                block_messageUpdater.AddMessage("");
+            }
         }
     }
  
