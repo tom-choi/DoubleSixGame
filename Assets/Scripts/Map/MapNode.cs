@@ -120,9 +120,9 @@ public class MapNode
         // two ways of adding events
         // this.onPlayerEnter += OnPlayerEnterNode;
         // this.onPlayerEnter += AnotherMethod;
-
-        TestingEvent testingEvent = new TestingEvent();
         // this.onPlayerEnter += testingEvent.OnSomeoneEnterNode;
+        TestingEvent testingEvent = new TestingEvent();
+
         this.onPlayerEnter += testingEvent.NullMethod;
         this.onPlayerEnterWithMessage += testingEvent.OnPlayerEnterNode;
 

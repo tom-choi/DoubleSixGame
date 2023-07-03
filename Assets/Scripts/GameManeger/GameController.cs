@@ -12,12 +12,13 @@ public class GameController : MonoBehaviour
     public int maxPlayerCount = 1; // 最大玩家数
     public bool gameOver = false; // 游戏是否结束
     public Dice dice;
-
+    private Dictionary<string,int> scoreBoard; // 計分板
     private int tmpDiceResult;
-
     // 初始化玩家位置，设置玩家编号，开始游戏
     void Start()
     {
+        // init scoreBoard
+        scoreBoard = new Dictionary<string, int>();
         // init maxPlayerCount
         maxPlayerCount = players.Length;
 
@@ -105,5 +106,28 @@ public class GameController : MonoBehaviour
     {
         int randomColorIndex = Random.Range(0, materials.Length);
         return materials[randomColorIndex];  
+    }
+    public void IncreasePlayerScore(string playerName, int amount)
+    {
+        if (scoreBoard.ContainsKey(playerName))
+        {
+            scoreBoard[playerName] += amount;
+        }
+        else
+        {
+            scoreBoard[playerName] = amount;
+        }
+    }
+
+    public int GetPlayerScore(string playerName)
+    {
+        if (scoreBoard.ContainsKey(playerName))
+        {
+            return scoreBoard[playerName];
+        }
+        else
+        {
+            return 0;
+        }
     }
 }
