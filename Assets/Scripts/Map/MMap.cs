@@ -19,12 +19,15 @@ public class MMap : MonoBehaviour
     //其他属性和方法
     public GameObject bBasePrefab;
     public GameObject mapObject;
+    private GameObject gameController;
 
     public int selectedMap = 1; // default to Map1
     public String MapPassword = "R10F10L5B5L5";
 
     void Awake()
     {
+        // Add code here to find the instance named "GameController"
+        gameController = GameObject.Find("GameController");
         // GenerateMap();
         GenerateMutilForkPasswordMap(MapPassword);
     }
@@ -359,8 +362,7 @@ public class MMap : MonoBehaviour
                 MapNode newNode = new MapNode();
                 newNode.position = currentNode.position + increment;
                 newNode.mapEventType = MapEventType.Normal;
-                
-                InstantiateAndRename(bBasePrefab, currentNode.position, mapObject.transform,
+                InstantiateAndRename(bBasePrefab, newNode.position, mapObject.transform,
                     "({0},{1},{2})");
                 
                 // connect
@@ -383,7 +385,7 @@ public class MMap : MonoBehaviour
             MapNode newNode = new MapNode();
             newNode.position = currentNode.position + nodeIncrements;
             newNode.mapEventType = MapEventType.Normal;
-            newNode = InstantiateAndRename(bBasePrefab, currentNode.position, mapObject.transform,
+            newNode = InstantiateAndRename(bBasePrefab, newNode.position, mapObject.transform,
                 "({0},{1},{2})",newNode);
             
             // connect
@@ -403,16 +405,8 @@ public class MMap : MonoBehaviour
         GameObject instance = Instantiate(prefab, position, Quaternion.identity, parentTransform);
         instance.name = string.Format(nameFormat, (int)position.x, (int)position.y,(int)position.z);
 
-        // Add code here to find the instance named "GameController"
-        GameObject gameController = GameObject.Find("GameController");
-
         // Set default color to red
         instance.GetComponent<Renderer>().material = gameController.GetComponent<GameController>().GetFirstMaterials();
-        
-
-        // Set random rainbow color
-        // Color[] rainbowColors = new Color[] { Color.red, Color.yellow, Color.green, Color.blue, Color.cyan, Color.magenta, Color.white };
-
         instance.GetComponent<Renderer>().material = gameController.GetComponent<GameController>().GetRandomMaterials();
 
         // Add code here to change the color of the gameobject instance
@@ -422,16 +416,8 @@ public class MMap : MonoBehaviour
         GameObject instance = Instantiate(prefab, position, Quaternion.identity, parentTransform);
         instance.name = string.Format(nameFormat, (int)position.x, (int)position.y,(int)position.z);
 
-        // Add code here to find the instance named "GameController"
-        GameObject gameController = GameObject.Find("GameController");
-
         // Set default color to red
         instance.GetComponent<Renderer>().material = gameController.GetComponent<GameController>().GetFirstMaterials();
-        
-
-        // Set random rainbow color
-        // Color[] rainbowColors = new Color[] { Color.red, Color.yellow, Color.green, Color.blue, Color.cyan, Color.magenta, Color.white };
-
         instance.GetComponent<Renderer>().material = gameController.GetComponent<GameController>().GetRandomMaterials();
 
         // Add code here to change the color of the gameobject instance
