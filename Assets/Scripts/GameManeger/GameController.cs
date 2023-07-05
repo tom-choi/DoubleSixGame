@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
@@ -13,7 +14,13 @@ public class GameController : MonoBehaviour
     public bool gameOver = false; // 游戏是否结束
     public Dice dice;
     private Dictionary<string,int> scoreBoard; // 計分板
+    private Dictionary<string,int> idxBoard; // index板
     private int tmpDiceResult;
+
+    [SerializeField] MessageUpdater score_messageUpdater = new MessageUpdater();
+    [SerializeField] TextMeshProUGUI score_channel;
+
+
     // 初始化玩家位置，设置玩家编号，开始游戏
     void Start()
     {
@@ -21,6 +28,24 @@ public class GameController : MonoBehaviour
         scoreBoard = new Dictionary<string, int>();
         // init maxPlayerCount
         maxPlayerCount = players.Length;
+        // init idxBoard
+        idxBoard = new Dictionary<string, int>();
+        for (int i = 0; i < maxPlayerCount; i++)
+        {
+            string playerName = players[i].name;
+            idxBoard[playerName] = i;
+        }
+        // init channel
+        if (score_messageUpdater != null) 
+        {
+            score_messageUpdater.SetUpMessageUpdater(score_channel);
+            score_messageUpdater.SetMaxMessages(4);
+            for (int i = 0; i < maxPlayerCount; i++)
+            {
+                string playerName = players[i].name;
+                score_messageUpdater.AddMessage($"{playerName} : {0}");
+            }
+        }
 
         playerPositions = new int[maxPlayerCount];
 
@@ -117,6 +142,7 @@ public class GameController : MonoBehaviour
         {
             scoreBoard[playerName] = amount;
         }
+        score_messageUpdater.EditMessage(idxBoard[playerName],$"{playerName} : {scoreBoard[playerName]}");
     }
 
     public int GetPlayerScore(string playerName)

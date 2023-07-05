@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using System.Linq;
 
 public class MessageUpdater
 {
@@ -19,7 +20,7 @@ public class MessageUpdater
         this.m_Object = m_Object;
     }
 
-    public void UpdateMessage(TextMeshProUGUI m_Object, Queue<string> messageHistory)
+    private void UpdateMessage(TextMeshProUGUI m_Object, Queue<string> messageHistory)
     {
         string message = "";
         foreach (string msg in messageHistory)
@@ -36,6 +37,14 @@ public class MessageUpdater
         {
             messageHistory.Dequeue();
         }
+        UpdateMessage(m_Object, messageHistory);
+    }
+
+    public void EditMessage(int index, string newMessage)
+    {
+        List<string> messageList = messageHistory.ToList();
+        messageList[index] = newMessage;
+        messageHistory = new Queue<string>(messageList);
         UpdateMessage(m_Object, messageHistory);
     }
 
@@ -57,6 +66,11 @@ public class MessageUpdater
         string newestMessage = messageHistory.Dequeue();
         messageHistory.Enqueue(newestMessage);
         UpdateMessage(m_Object, messageHistory);
+    }
+
+    public void SetMaxMessages(int max)
+    {
+        this.maxMessages = max;
     }
 }
 

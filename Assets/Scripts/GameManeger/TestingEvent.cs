@@ -40,7 +40,7 @@ public class TestingEvent
     {
         int result = UnityEngine.Random.Range(1,5);
         gameController.GetComponent<GameController>().IncreasePlayerScore(name,result);
-        Debug.Log($"This is BlueMethod, added {result} Points! (now have {gameController.GetComponent<GameController>().GetPlayerScore(name)})");
+        // Debug.Log($"This is BlueMethod, added {result} Points! (now have {gameController.GetComponent<GameController>().GetPlayerScore(name)})");
     }
 }
 
