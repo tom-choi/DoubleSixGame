@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // exmovement function
-        bool exmovement = true;
+        bool exmovement = false;
         if (exmovement)
         {
             yield return new WaitForSeconds(moveWaitTime);
@@ -139,10 +139,10 @@ public class PlayerController : MonoBehaviour
             PassedNode.Add(currentNode.position.ToString());
             
             // Loop through the PassedNode list and print each item to the console
-            foreach (string node in PassedNode)
-            {
-                Debug.Log(node);
-            }
+            // foreach (string node in PassedNode)
+            // {
+            //     Debug.Log(node);
+            // }
 
             currentNode.PlayerPassed();
             currentNode.PlayerPassed(this.playerName);

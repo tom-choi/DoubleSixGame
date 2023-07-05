@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Glass
-  m_Shader: {fileID: 4800000, guid: 55c1c4263cb5960498f61de2ed8d129c, type: 3}
+  m_Name: Hbh Shader_View Outline Shading
+  m_Shader: {fileID: 4800000, guid: 2f140f81272dcd94cb3faaf923bf81ac, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -19,15 +19,9 @@ Material:
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+    m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Glossiness: 0.5
-    - _Translucency: 0.5
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Outline: 0.203
+    m_Colors: []
   m_BuildTextureStacks: []

@@ -1,9 +1,15 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TestingEvent
 {
+    private GameObject gameController;
+    public TestingEvent()
+    {
+        gameController = GameObject.Find("GameController");
+    }
     public void OnSomeoneEnterNode(MapNode node)
     {
         Debug.Log($"Someone at position {node.position}");
@@ -29,6 +35,12 @@ public class TestingEvent
     public void RedMethod(MapNode node)
     {
         Debug.Log($"This is RedMethod");
+    }
+    public void BlueMethod(MapNode node,string name)
+    {
+        int result = UnityEngine.Random.Range(1,5);
+        gameController.GetComponent<GameController>().IncreasePlayerScore(name,result);
+        // Debug.Log($"This is BlueMethod, added {result} Points! (now have {gameController.GetComponent<GameController>().GetPlayerScore(name)})");
     }
 }
 
