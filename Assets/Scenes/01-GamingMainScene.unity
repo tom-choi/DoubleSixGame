@@ -5819,7 +5819,7 @@ MonoBehaviour:
   maxPlayerCount: 1
   gameOver: 0
   dice: {fileID: 312918792}
-  score_channel: {fileID: 0}
+  score_channel: {fileID: 891990974}
   materials:
   - {fileID: 2100000, guid: 6d4f2dc376da55b49bf3ecad90bb6044, type: 2}
   - {fileID: 2100000, guid: 6b84a817bfbd7e14dbf55eeeed078830, type: 2}
