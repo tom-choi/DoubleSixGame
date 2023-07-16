@@ -10,37 +10,60 @@ public class TestingEvent
     {
         gameController = GameObject.Find("GameController");
     }
-    public void OnSomeoneEnterNode(MapNode node)
+    public string OnSomeoneEnterNode(MapNode node)
     {
         Debug.Log($"Someone at position {node.position}");
         // Add trigger event logic here
+        return "OnSomeoneEnterNode";
     }
-    public void OnPlayerEnterNode(MapNode node,string name)
+    public string OnPlayerEnterNode(MapNode node,string name)
     {
         Debug.Log($"{name} at position {node.position}");
         // Add trigger event logic here
+        return "OnPlayerEnterNode";
     }
-    public void NullMethod(MapNode node)
+    public string NullMethod(MapNode node)
     {
         // Debug.Log($"This is AnotherMethod()");
+        return "NullMethod";
     }
-    public void NullMethod(MapNode node,string message)
+    public string NullMethod(MapNode node,string message)
     {
         // Debug.Log($"This is AnotherMethod()");
+        return "NullMethod";
     }
-    public void CurrentNodePosition(MapNode node)
+    public string CurrentNodePosition(MapNode node)
     {
         Debug.Log($"{node.position}");
+        return "CurrentNodePosition";
     }
-    public void RedMethod(MapNode node)
+    public string RedMethod(MapNode node)
     {
         Debug.Log($"This is RedMethod");
+        return "RedMethod";
     }
-    public void BlueMethod(MapNode node,string name)
+    public string BlueMethod(MapNode node,string name)
     {
         int result = UnityEngine.Random.Range(1,5);
         gameController.GetComponent<GameController>().IncreasePlayerScore(name,result);
         // Debug.Log($"This is BlueMethod, added {result} Points! (now have {gameController.GetComponent<GameController>().GetPlayerScore(name)})");
+        return "BlueMethod";
+    }
+    public string HelloMethod1(MapNode node, string name)
+    {
+        return "HelloMethod1";
+    }
+    public string HelloMethod2(MapNode node, string name)
+    {
+        return "HelloMethod2";
+    }
+    public string HelloMethod3(MapNode node, string name)
+    {
+        return "HelloMethod3";
+    }
+    public string GreenMethod(MapNode node,string name)
+    {
+        return "GreenMethod";
     }
 }
 

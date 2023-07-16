@@ -91,7 +91,16 @@ public class PlayerController : MonoBehaviour
 
         // Event triggered
         currentNode.PlayerEntered();
-        currentNode.PlayerEntered(this.playerName);
+        string ret = currentNode.PlayerEntered(this.playerName);
+        Debug.Log(ret);
+
+        // exmovement function
+        bool exmovement = false;
+        if (exmovement)
+        {
+            yield return new WaitForSeconds(moveWaitTime);
+            MoveToTargetNode(map.GetRandomNonEmptyNode());
+        }
         
     }
 
@@ -115,6 +124,11 @@ public class PlayerController : MonoBehaviour
             MoveToNextNode();
         }
 
+        // Event triggered
+        currentNode.PlayerEntered();
+        string ret = currentNode.PlayerEntered(this.playerName);
+        Debug.Log(ret);
+
         // exmovement function
         bool exmovement = false;
         if (exmovement)
@@ -122,10 +136,6 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(moveWaitTime);
             MoveToTargetNode(map.GetRandomNonEmptyNode());
         }
-
-        // Event triggered
-        currentNode.PlayerEntered();
-        currentNode.PlayerEntered(this.playerName);
         
     }
 

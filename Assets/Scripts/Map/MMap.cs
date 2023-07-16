@@ -431,6 +431,12 @@ public class MMap : MonoBehaviour
                 break;
             case "BlueMaterial (Instance)":
                 mapNode.onPlayerEnterWithMessage += testingEvent.BlueMethod;
+                mapNode.onPlayerEnterWithMessage += testingEvent.HelloMethod1;
+                mapNode.onPlayerEnterWithMessage += testingEvent.HelloMethod2;
+                mapNode.onPlayerEnterWithMessage += testingEvent.HelloMethod3;
+                break;
+            case "GreenMaterial (Instance)":
+                mapNode.onPlayerEnterWithMessage += testingEvent.GreenMethod;
                 break;
             default:
                 break;

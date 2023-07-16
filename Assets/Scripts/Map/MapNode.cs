@@ -77,12 +77,15 @@ public class MapNode
             onPlayerEnter(this);
         }
     }
-    public void PlayerEntered(string message)
+    public string PlayerEntered(string message)
     {
+        string ret = "";
         if (onPlayerEnter != null)
         {
-            onPlayerEnterWithMessage(this,message);
+            ret = onPlayerEnterWithMessage(this,message);
         }
+        return ret;
+        //return ;
     }
     public void PlayerPassed()
     {
