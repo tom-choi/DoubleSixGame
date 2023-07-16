@@ -92,10 +92,10 @@ public class PlayerController : MonoBehaviour
         // Event triggered
         currentNode.PlayerEntered();
         string ret = currentNode.PlayerEntered(this.playerName);
-        Debug.Log(ret);
 
         // exmovement function
         bool exmovement = false;
+        if (ret == "GreenMethod") exmovement = true;
         if (exmovement)
         {
             yield return new WaitForSeconds(moveWaitTime);
@@ -127,10 +127,10 @@ public class PlayerController : MonoBehaviour
         // Event triggered
         currentNode.PlayerEntered();
         string ret = currentNode.PlayerEntered(this.playerName);
-        Debug.Log(ret);
 
         // exmovement function
         bool exmovement = false;
+        if (ret == "GreenMethod") exmovement = true;
         if (exmovement)
         {
             yield return new WaitForSeconds(moveWaitTime);
