@@ -64,6 +64,13 @@ public class GameController : MonoBehaviour
         playerController.IWannaToDice();
     }
 
+    public void PlayerWannaSkip()
+    {
+        // 获取当前玩家控制器组件
+        PlayerController playerController = players[currentPlayer].GetComponent<PlayerController>();
+        playerController.IWannaToSkip();
+    }
+
 
     // 游戏主循环，不断切换当前玩家，等待玩家投掷骰子，更新玩家位置
     IEnumerator GameLoop()

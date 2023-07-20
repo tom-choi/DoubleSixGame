@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private MapNode currentNode;
     private bool diceInHand = false;
     private bool iWannaToDice = false;
+    private bool iWannaToSkip = false;
 
     private int tmpDiceResult;
 
@@ -39,19 +40,43 @@ public class PlayerController : MonoBehaviour
 
     public void GiveMeDice()
     {
+        // init Player Selection for debug ()
         this.iWannaToDice = false;
+        this.iWannaToSkip = false;
+
         this.diceInHand = true;
     }
 
     public void LoseMyDice()
     {
-        this.iWannaToDice = false;
         this.diceInHand = false;
+    }
+
+    public void ResetWaitingStatement()
+    {
+        // init Player Selection for debug ()
+        this.iWannaToDice = false;
+        this.iWannaToSkip = false;
     }
 
     public void IWannaToDice()
     {
         this.iWannaToDice = true;
+    }
+    
+    public void IWannaToSkip()
+    {
+        this.iWannaToSkip = true;
+    }
+
+    public bool IsDice()
+    {
+        return this.iWannaToDice;
+    }
+
+    public bool IsSkip()
+    {
+        return this.iWannaToSkip;
     }
 
     public int getTmpDiceResult()
@@ -71,37 +96,49 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator WaitForRollDice(Dice dice)
     {
-        while (!diceInHand || !iWannaToDice)
+        while (!diceInHand || (!iWannaToDice && !iWannaToSkip))
         {
             yield return null;
-        }
+        }   
 
         LoseMyDice();
 
-        int result = dice.PlayerRoll(this.playerName);
-        tmpDiceResult = result;
-        // play animation
-
-        //
-        for (int i = 0; i < result; i++)
+        if (IsDice())
         {
-            yield return new WaitForSeconds(moveWaitTime);
-            MoveToNextNode();
+            int result = dice.PlayerRoll(this.playerName);
+            tmpDiceResult = result;
+            // play animation
+
+            //
+            for (int i = 0; i < result; i++)
+            {
+                yield return new WaitForSeconds(moveWaitTime);
+                MoveToNextNode();
+            }
+
+            // Event triggered
+            currentNode.PlayerEntered();
+            string ret = currentNode.PlayerEntered(this.playerName);
+
+            // exmovement function
+            bool exmovement = false;
+            if (ret == "GreenMethod") exmovement = true;
+            if (exmovement)
+            {
+                yield return new WaitForSeconds(moveWaitTime);
+                MoveToTargetNode(map.GetRandomNonEmptyNode());
+            }
         }
-
-        // Event triggered
-        currentNode.PlayerEntered();
-        string ret = currentNode.PlayerEntered(this.playerName);
-
-        // exmovement function
-        bool exmovement = false;
-        if (ret == "GreenMethod") exmovement = true;
-        if (exmovement)
+        else if (IsSkip())
         {
-            yield return new WaitForSeconds(moveWaitTime);
-            MoveToTargetNode(map.GetRandomNonEmptyNode());
+            Debug.Log("Player skip one round");
+        }
+        else
+        {
+
         }
         
+        ResetWaitingStatement();
     }
 
     public IEnumerator AIWaitForRollDice(Dice dice)
@@ -110,6 +147,7 @@ public class PlayerController : MonoBehaviour
         {
             yield return null;
         }
+        
 
         LoseMyDice();
 
@@ -136,6 +174,10 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(moveWaitTime);
             MoveToTargetNode(map.GetRandomNonEmptyNode());
         }
+        // else if ()
+        
+
+        // Re
         
     }
 
