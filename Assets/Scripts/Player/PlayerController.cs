@@ -98,20 +98,77 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator WaitForRollDice(Dice dice)
     {
-        while (!diceInHand || (!iWannaToDice && !iWannaToSkip))
+        bool isContinue = true;
+        while (isContinue)
         {
-            yield return null;
-        }   
+            isContinue = false;
+            while (!diceInHand || (!iWannaToDice && !iWannaToSkip))
+            {
+                yield return null;
+            }   
 
-        LoseMyDice();
+            LoseMyDice();
 
-        if (IsDice())
+            if (IsDice())
+            {
+                int result = dice.PlayerRoll(this.playerName);
+                tmpDiceResult = result;
+                // play animation
+                for (int i = 0; i < result; i++)
+                {
+                    yield return new WaitForSeconds(moveWaitTime);
+                    MoveToNextNode();
+                }
+
+                // Event triggered
+                currentNode.PlayerEntered();
+                string ret = currentNode.PlayerEntered(this.playerName);
+                // Debug.Log(ret);
+
+               // ret event response
+                if (ret == "GreenMethod") 
+                {
+                    // Random movement
+                    yield return new WaitForSeconds(moveWaitTime);
+                    MoveToTargetNode(map.GetRandomNonEmptyNode());
+                }
+                else if (ret == "RedMethod")
+                {
+                    // made player can move again
+                    GiveMeDice();
+                    isContinue = true;
+                }
+            }
+            else if (IsSkip())
+            {
+                Debug.Log("Player skip one round");
+            }
+            else
+            {
+                Debug.Log("Another Methed (Debugging)");
+            }
+            ResetWaitingStatement();
+        }
+    }
+
+    public IEnumerator AIWaitForRollDice(Dice dice)
+    {
+        bool isContinue = true;
+        while (isContinue)
         {
+            isContinue = false;
+            while (!diceInHand)
+            {
+                yield return null;
+            }
+        
+            LoseMyDice();
+
             int result = dice.PlayerRoll(this.playerName);
             tmpDiceResult = result;
             // play animation
 
-            //
+            // movement function
             for (int i = 0; i < result; i++)
             {
                 yield return new WaitForSeconds(moveWaitTime);
@@ -121,66 +178,20 @@ public class PlayerController : MonoBehaviour
             // Event triggered
             currentNode.PlayerEntered();
             string ret = currentNode.PlayerEntered(this.playerName);
+            Debug.Log(ret);
 
-            // exmovement function
-            bool exmovement = false;
-            if (ret == "GreenMethod") exmovement = true;
-            if (exmovement)
+            // ret event response
+            if (ret == "GreenMethod")
             {
                 yield return new WaitForSeconds(moveWaitTime);
                 MoveToTargetNode(map.GetRandomNonEmptyNode());
             }
+            else if (ret == "RedMethod")
+            {
+                GiveMeDice();
+                isContinue = true;
+            }
         }
-        else if (IsSkip())
-        {
-           Debug .Log("Player skip one round");
-        }
-        else
-        {
-
-        }
-        
-        ResetWaitingStatement();
-    }
-
-    public IEnumerator AIWaitForRollDice(Dice dice)
-    {
-        while (!diceInHand)
-        {
-            yield return null;
-        }
-        
-
-        LoseMyDice();
-
-        int result = dice.PlayerRoll(this.playerName);
-        tmpDiceResult = result;
-        // play animation
-
-        // movement function
-        for (int i = 0; i < result; i++)
-        {
-            yield return new WaitForSeconds(moveWaitTime);
-            MoveToNextNode();
-        }
-
-        // Event triggered
-        currentNode.PlayerEntered();
-        string ret = currentNode.PlayerEntered(this.playerName);
-
-        // exmovement function
-        bool exmovement = false;
-        if (ret == "GreenMethod") exmovement = true;
-        if (exmovement)
-        {
-            yield return new WaitForSeconds(moveWaitTime);
-            MoveToTargetNode(map.GetRandomNonEmptyNode());
-        }
-        // else if ()
-        
-
-        // Re
-        
     }
 
     void MoveToNextNode()

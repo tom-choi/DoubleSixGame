@@ -37,9 +37,9 @@ public class TestingEvent
         Debug.Log($"{node.position}");
         return "CurrentNodePosition";
     }
-    public string RedMethod(MapNode node)
+    public string RedMethod(MapNode node,string name)
     {
-        Debug.Log($"This is RedMethod");
+        Debug.Log($"This is RedMethod, player can move again");
         return "RedMethod";
     }
     public string BlueMethod(MapNode node,string name)
