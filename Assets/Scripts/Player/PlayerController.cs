@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     private bool diceInHand = false;
     private bool iWannaToDice = false;
     private bool iWannaToSkip = false;
+    private bool iWannaGo = false;
+    private int tmpGo = 0;
 
     private int tmpDiceResult;
 
@@ -131,7 +133,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (IsSkip())
         {
-            Debug.Log("Player skip one round");
+           Debug .Log("Player skip one round");
         }
         else
         {
