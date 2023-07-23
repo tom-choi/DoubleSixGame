@@ -131,25 +131,24 @@ public class PlayerController : MonoBehaviour
                 // Event triggered
                 currentNode.PlayerEntered();
                 string ret = currentNode.PlayerEntered(this.playerName);
-                // Debug.Log(ret);
-
-               // ret event response
-                if (ret == "GreenMethod") 
+                
+                // ret event response
+                switch(ret)
                 {
-                    // Random movement
-                    yield return new WaitForSeconds(moveWaitTime);
-                    MoveToTargetNode(map.GetRandomNonEmptyNode());
-                }
-                else if (ret == "RedMethod")
-                {
-                    // made player can move again
-                    GiveMeDice();
-                    isContinue = true;
-                }
-                else if (ret == "YellowMethod")
-                {
-                    // made player stop in the next round
-                    relaxTime = 1;
+                    case "GreenMethod":
+                        // Random movement
+                        yield return new WaitForSeconds(moveWaitTime);
+                        MoveToTargetNode(map.GetRandomNonEmptyNode());
+                        break;
+                    case "RedMethod":
+                        // made player can move again
+                        GiveMeDice();
+                        isContinue = true;
+                        break;
+                    case "YellowMethod":
+                        // made player stop in the next round
+                        relaxTime = 1;
+                        break;
                 }
             }
             else if (IsSkip())
@@ -201,15 +200,19 @@ public class PlayerController : MonoBehaviour
             Debug.Log(ret);
 
             // ret event response
-            if (ret == "GreenMethod")
+            switch(ret)
             {
-                yield return new WaitForSeconds(moveWaitTime);
-                MoveToTargetNode(map.GetRandomNonEmptyNode());
-            }
-            else if (ret == "RedMethod")
-            {
-                GiveMeDice();
-                isContinue = true;
+                case "GreenMethod":
+                    yield return new WaitForSeconds(moveWaitTime);
+                    MoveToTargetNode(map.GetRandomNonEmptyNode());
+                    break;
+                case "RedMethod":
+                    GiveMeDice();
+                    isContinue = true;
+                    break;
+                case "YellowMethod":
+                    relaxTime = 1;
+                    break;
             }
         }
     }
