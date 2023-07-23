@@ -70,19 +70,24 @@ public class MapNode
     public MapNodeEvent onplayerPassed;
     public MapNodeEventWithMessage onPlayerEnterWithMessage;
     public MapNodeEventWithMessage onplayerPassedWithMessage;
-    public void PlayerEntered()
+    public string PlayerEntered()
     {
+        string ret = "";
         if (onPlayerEnter != null)
         {
-            onPlayerEnter(this);
+            ret = onPlayerEnter(this);
         }
+        return ret;
     }
-    public void PlayerEntered(string message)
+    public string PlayerEntered(string message)
     {
+        string ret = "";
         if (onPlayerEnter != null)
         {
-            onPlayerEnterWithMessage(this,message);
+            ret = onPlayerEnterWithMessage(this,message);
         }
+        return ret;
+        //return ;
     }
     public void PlayerPassed()
     {
