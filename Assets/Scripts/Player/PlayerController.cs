@@ -16,14 +16,15 @@ public class PlayerController : MonoBehaviour
     private bool iWannaToSkip = false;
     private bool iWannaGo = false;
     private int tmpGo = 0;
-
     private int tmpDiceResult;
-
     public bool isAI = false;
 
     //其他属性和方法
     // 行動隊列
     private List<string> PassedNode = new List<string>();
+
+    // 休息時間
+    public int relaxTime = 0;
 
     void Start()
     {
@@ -99,6 +100,13 @@ public class PlayerController : MonoBehaviour
     public IEnumerator WaitForRollDice(Dice dice)
     {
         bool isContinue = true;
+        if (relaxTime > 0)
+        {
+            isContinue = false;
+            relaxTime--;
+            if (relaxTime > 0) Debug.Log("Player had to relax " + relaxTime + " round(s).");
+            else Debug.Log("Player had to relax this round, next round can move");
+        }
         while (isContinue)
         {
             isContinue = false;
@@ -138,6 +146,11 @@ public class PlayerController : MonoBehaviour
                     GiveMeDice();
                     isContinue = true;
                 }
+                else if (ret == "YellowMethod")
+                {
+                    // made player stop in the next round
+                    relaxTime = 1;
+                }
             }
             else if (IsSkip())
             {
@@ -154,6 +167,13 @@ public class PlayerController : MonoBehaviour
     public IEnumerator AIWaitForRollDice(Dice dice)
     {
         bool isContinue = true;
+        if (relaxTime > 0)
+        {
+            isContinue = false;
+            relaxTime--;
+            if (relaxTime > 0) Debug.Log("Player had to relax " + relaxTime + " round(s).");
+            else Debug.Log("Player had to relax this round, next round can move");
+        }
         while (isContinue)
         {
             isContinue = false;

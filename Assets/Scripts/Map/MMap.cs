@@ -438,6 +438,9 @@ public class MMap : MonoBehaviour
             case "GreenMaterial (Instance)":
                 mapNode.onPlayerEnterWithMessage += testingEvent.GreenMethod;
                 break;
+            case "YellowMaterial (Instance)":
+                mapNode.onPlayerEnterWithMessage += testingEvent.YellowMethod;
+                break;
             default:
                 break;
         }

@@ -34,7 +34,7 @@ public class TestingEvent
     }
     public string CurrentNodePosition(MapNode node)
     {
-        Debug.Log($"{node.position}");
+        // Debug.Log($"{node.position}");
         return "CurrentNodePosition";
     }
     public string RedMethod(MapNode node,string name)
@@ -48,6 +48,11 @@ public class TestingEvent
         gameController.GetComponent<GameController>().IncreasePlayerScore(name,result);
         // Debug.Log($"This is BlueMethod, added {result} Points! (now have {gameController.GetComponent<GameController>().GetPlayerScore(name)})");
         return "BlueMethod";
+    }
+    public string YellowMethod(MapNode node,string name)
+    {
+        Debug.Log($"This is YellowMethod, player have to relax 1 round");
+        return "YellowMethod";
     }
     public string HelloMethod1(MapNode node, string name)
     {
