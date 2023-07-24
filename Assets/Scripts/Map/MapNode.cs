@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class MapNode
 {
     public Vector3 position;
@@ -58,8 +59,23 @@ public class MapNode
     }
 
     // 添加事件委托类型的成员变量，當玩家進入地塊的時候
-    public MapNodeEventWithMessage onPlayerEnter;
-    public MapNodeEventWithMessage onPlayerPassed;
+    private MapNodeEventWithMessage onPlayerEnter;
+    private MapNodeEventWithMessage onPlayerPassed;
+    public void addEvent(EventTriggerType type, MapNodeEventWithMessage func)
+    {
+        switch (type)
+        {
+            case EventTriggerType.Enter:
+                this.onPlayerEnter += func;
+                break;
+            case EventTriggerType.Passed:
+                this.onPlayerPassed += func;
+                break;
+            default:
+                Debug.Log("addEvent failed! check is EventTriggerType correct");
+                break;
+        }
+    }
     
     // can input some details(messages) depends on according event
     public string PlayerEntered(string details)
@@ -115,7 +131,8 @@ public class MapNode
         
         // but not void
         // this.onPlayerEnter += VoidMethod;
-
     }
+
+
 
 }

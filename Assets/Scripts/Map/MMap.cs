@@ -403,19 +403,16 @@ public class MMap : MonoBehaviour
         switch (materialName)
         {
             case "RedMaterial (Instance)":
-                mapNode.onPlayerEnter += testingEvent.RedMethod;
+                mapNode.addEvent(EventTriggerType.Enter, testingEvent.RedMethod);
                 break;
             case "BlueMaterial (Instance)":
-                mapNode.onPlayerEnter += testingEvent.BlueMethod;
-                // mapNode.onPlayerEnter += testingEvent.HelloMethod1;
-                // mapNode.onPlayerEnter += testingEvent.HelloMethod2;
-                // mapNode.onPlayerEnter += testingEvent.HelloMethod3;
+                mapNode.addEvent(EventTriggerType.Enter, testingEvent.BlueMethod);
                 break;
             case "GreenMaterial (Instance)":
-                mapNode.onPlayerEnter += testingEvent.GreenMethod;
+                mapNode.addEvent(EventTriggerType.Enter, testingEvent.GreenMethod);
                 break;
             case "YellowMaterial (Instance)":
-                mapNode.onPlayerEnter += testingEvent.YellowMethod;
+                mapNode.addEvent(EventTriggerType.Enter, testingEvent.YellowMethod);
                 break;
             default:
                 break;
