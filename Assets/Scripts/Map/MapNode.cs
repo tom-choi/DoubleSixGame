@@ -7,22 +7,18 @@ public class MapNode
 {
     public Vector3 position;
     public string GUID;
-
     public Dictionary<MapNode, int> nextNodes = new Dictionary<MapNode, int>();
     public Dictionary<MapNode, int> preNodes = new Dictionary<MapNode, int>();
-    public MapEventType mapEventType;
-    public MapEvent eventInfo;
+    public MapEvent[] eventInfo;
 
     public void AddNodeInNextNodes(MapNode node,int level)
     {
         nextNodes.Add(node,level);
     }
-
     public void AddNodeInPreNodes(MapNode node,int level)
     {
         preNodes.Add(node,level);
     }
-    
     public void RemoveNodeFromNextNodes(MapNode node)
     {
         if (nextNodes.ContainsKey(node))
@@ -30,7 +26,6 @@ public class MapNode
             nextNodes.Remove(node);
         }
     }
-
     public void RemoveNodeFromPreNodes(MapNode node)
     {
         if (preNodes.ContainsKey(node))
@@ -38,12 +33,10 @@ public class MapNode
             preNodes.Remove(node);
         }
     }
-
     public bool NextNodesIsEmpty()
     {
         return nextNodes.Count == 0;
     }
-
     public bool PreNodesIsEmpty()
     {
         return preNodes.Count == 0;
@@ -64,44 +57,30 @@ public class MapNode
         return nodeList[randomIndex];
     }
 
-
     // 添加事件委托类型的成员变量，當玩家進入地塊的時候
-    public MapNodeEvent onPlayerEnter;
-    public MapNodeEvent onplayerPassed;
-    public MapNodeEventWithMessage onPlayerEnterWithMessage;
-    public MapNodeEventWithMessage onplayerPassedWithMessage;
-    public string PlayerEntered()
+    public MapNodeEventWithMessage onPlayerEnter;
+    public MapNodeEventWithMessage onPlayerPassed;
+    
+    // can input some details(messages) depends on according event
+    public string PlayerEntered(string details)
     {
         string ret = "";
         if (onPlayerEnter != null)
         {
-            ret = onPlayerEnter(this);
+            ret = onPlayerEnter(this,details);
         }
         return ret;
     }
-    public string PlayerEntered(string message)
+
+    // can input some details(messages) depends on according event
+    public string PlayerPassed(string details)
     {
         string ret = "";
-        if (onPlayerEnter != null)
+        if (onPlayerPassed != null)
         {
-            ret = onPlayerEnterWithMessage(this,message);
+            ret = onPlayerPassed(this,details);
         }
         return ret;
-        //return ;
-    }
-    public void PlayerPassed()
-    {
-        if (onplayerPassed != null)
-        {
-            onplayerPassed(this);
-        }
-    }
-    public void PlayerPassed(string message)
-    {
-        if (onplayerPassed != null)
-        {
-            onplayerPassedWithMessage(this,message);
-        }
     }
 
     // public void OnPlayerEnterNode(MapNode node)
@@ -129,10 +108,10 @@ public class MapNode
         TestingEvent testingEvent = new TestingEvent();
 
         this.onPlayerEnter += testingEvent.NullMethod;
-        this.onPlayerEnterWithMessage += testingEvent.OnPlayerEnterNode;
+        this.onPlayerEnter += testingEvent.OnPlayerEnterNode;
 
-        this.onplayerPassed += testingEvent.CurrentNodePosition;
-        this.onplayerPassedWithMessage += testingEvent.NullMethod;
+        this.onPlayerPassed += testingEvent.CurrentNodePosition;
+        this.onPlayerPassed += testingEvent.NullMethod;
         
         // but not void
         // this.onPlayerEnter += VoidMethod;
