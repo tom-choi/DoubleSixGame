@@ -399,20 +399,25 @@ public class MMap : MonoBehaviour
         // Add code here to change the color of the gameobject instance
         String materialName = instance.GetComponent<Renderer>().material.name;
         TestingEvent testingEvent = new TestingEvent();
+        MapEvent me = new MapEvent();
         // Debug.Log(materialName);
         switch (materialName)
         {
             case "RedMaterial (Instance)":
-                mapNode.addEvent(EventTriggerType.Enter, testingEvent.RedMethod);
+                me = new MapEvent("Red Event","Player can move again");
+                mapNode.addEvent(EventTriggerType.Enter, testingEvent.RedMethod, me);
                 break;
             case "BlueMaterial (Instance)":
-                mapNode.addEvent(EventTriggerType.Enter, testingEvent.BlueMethod);
+                me = new MapEvent("Blue Event","Player can get random points");
+                mapNode.addEvent(EventTriggerType.Enter, testingEvent.BlueMethod, me);
                 break;
             case "GreenMaterial (Instance)":
-                mapNode.addEvent(EventTriggerType.Enter, testingEvent.GreenMethod);
+                me = new MapEvent("Green Event","Player can teleport to random places");
+                mapNode.addEvent(EventTriggerType.Enter, testingEvent.GreenMethod, me);
                 break;
             case "YellowMaterial (Instance)":
-                mapNode.addEvent(EventTriggerType.Enter, testingEvent.YellowMethod);
+                me = new MapEvent("Yellow Event","Player relax 1 round");
+                mapNode.addEvent(EventTriggerType.Enter, testingEvent.YellowMethod, me);
                 break;
             default:
                 break;

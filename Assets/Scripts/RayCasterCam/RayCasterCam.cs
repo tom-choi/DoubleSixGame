@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using System.Text.RegularExpressions;
 
 
 public class RayCasterCam : MonoBehaviour
@@ -10,6 +11,7 @@ public class RayCasterCam : MonoBehaviour
     public List<GameObject> loseFocus; // 失焦的游戏对象
     private RaycastHit hit; // 碰撞信息
     public Material OutlineEffect;
+    public MMap map;
 
     [SerializeField] MessageUpdater block_messageUpdater = new MessageUpdater();
     [SerializeField] TextMeshProUGUI block_channel;
@@ -72,7 +74,27 @@ public class RayCasterCam : MonoBehaviour
         {
             try 
             {
-                block_messageUpdater.AddMessage(targets[0].name);
+                try
+                {
+                    string name = targets[0].name;
+                    Regex regex = new Regex(@"\((\d+),(\d+),(\d+)\)");
+                    Match match = regex.Match(name);
+
+                    int x = int.Parse(match.Groups[1].Value); 
+                    int y = int.Parse(match.Groups[2].Value);
+                    int z = int.Parse(match.Groups[3].Value);
+                    string str = map.nodes[x,y,z].GetAllEnterEventInfo();
+                    if (str != "") 
+                        block_messageUpdater.AddMessage(map.nodes[x,y,z].GetAllEnterEventInfo());
+                    else 
+                        block_messageUpdater.AddMessage(targets[0].name);
+    
+                }
+                catch (Exception e)
+                {
+                    //Debug.Log(e.Message);
+                    block_messageUpdater.AddMessage(targets[0].name);
+                }
             }
             catch (Exception e)
             {

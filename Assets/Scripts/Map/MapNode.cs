@@ -10,7 +10,6 @@ public class MapNode
     public string GUID;
     public Dictionary<MapNode, int> nextNodes = new Dictionary<MapNode, int>();
     public Dictionary<MapNode, int> preNodes = new Dictionary<MapNode, int>();
-    public MapEvent[] eventInfo;
 
     public void AddNodeInNextNodes(MapNode node,int level)
     {
@@ -61,20 +60,42 @@ public class MapNode
     // 添加事件委托类型的成员变量，當玩家進入地塊的時候
     private MapNodeEventWithMessage onPlayerEnter;
     private MapNodeEventWithMessage onPlayerPassed;
-    public void addEvent(EventTriggerType type, MapNodeEventWithMessage func)
+    public MapEvent[] enterEventInfo = new MapEvent[16];
+    public MapEvent[] passEventInfo = new MapEvent[16];
+    public int enterEventInfoSize = 0;
+    public int passEventInfoSize = 0;
+    public void addEvent(EventTriggerType type, MapNodeEventWithMessage func, MapEvent mapEvent = null)
     {
+        if (mapEvent == null)
+        {
+            mapEvent = new MapEvent();
+        }
         switch (type)
         {
             case EventTriggerType.Enter:
                 this.onPlayerEnter += func;
+                this.enterEventInfo[enterEventInfoSize++] = mapEvent;
                 break;
             case EventTriggerType.Passed:
                 this.onPlayerPassed += func;
+                this.passEventInfo[passEventInfoSize++] = mapEvent;
                 break;
             default:
-                Debug.Log("addEvent failed! check is EventTriggerType correct");
+                Debug.Log("addEvent() failed! check is EventTriggerType correct");
                 break;
         }
+    }
+    public string GetAllEnterEventInfo()
+    {
+        string result = "";
+        foreach (MapEvent mapEvent in enterEventInfo)
+        {
+            if (mapEvent != null)
+            {
+                result += $"{mapEvent.EventName()}: {mapEvent.EventDetail()}\n";
+            }
+        }
+        return result;
     }
     
     // can input some details(messages) depends on according event
@@ -103,11 +124,16 @@ public class MapNode
     {
         this.GUID = Guid.NewGuid().ToString();
         TestingEvent testingEvent = new TestingEvent();
+        MapEvent me = new MapEvent();
 
-        this.addEvent(EventTriggerType.Enter, testingEvent.NullMethod);
-        this.addEvent(EventTriggerType.Enter, testingEvent.OnPlayerEnterNode);
+        // me = new MapEvent("NullMethod","null");
+        // this.addEvent(EventTriggerType.Enter, testingEvent.NullMethod, me);
+        // me = new MapEvent("OnPlayerEnterNode","trigger of enter");
+        // this.addEvent(EventTriggerType.Enter, testingEvent.OnPlayerEnterNode, me);
 
-        this.addEvent(EventTriggerType.Passed, testingEvent.NullMethod);
-        this.addEvent(EventTriggerType.Passed, testingEvent.CurrentNodePosition);
+        me = new MapEvent("NullMethod","null");
+        this.addEvent(EventTriggerType.Passed, testingEvent.NullMethod, me);
+        me = new MapEvent("CurrentNodePosition","report current xyz");
+        this.addEvent(EventTriggerType.Passed, testingEvent.CurrentNodePosition, me);
     }
 }
