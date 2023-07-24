@@ -99,40 +99,15 @@ public class MapNode
         return ret;
     }
 
-    // public void OnPlayerEnterNode(MapNode node)
-    // {
-    //     Debug.Log($"Player entered node {node.position}");
-    //     // Add trigger event logic here
-    // }
-    // public void AnotherMethod(MapNode node)
-    // {
-    //     Debug.Log($"This is AnotherMethod()");
-    // }
-    // public void VoidMethod()
-    // {
-    //     Debug.Log($"This is VoidMethod()");
-    // }
-
-    // Start is called before the first frame update
     public MapNode()
     {
         this.GUID = Guid.NewGuid().ToString();
-        // two ways of adding events
-        // this.onPlayerEnter += OnPlayerEnterNode;
-        // this.onPlayerEnter += AnotherMethod;
-        // this.onPlayerEnter += testingEvent.OnSomeoneEnterNode;
         TestingEvent testingEvent = new TestingEvent();
 
-        this.onPlayerEnter += testingEvent.NullMethod;
-        this.onPlayerEnter += testingEvent.OnPlayerEnterNode;
+        this.addEvent(EventTriggerType.Enter, testingEvent.NullMethod);
+        this.addEvent(EventTriggerType.Enter, testingEvent.OnPlayerEnterNode);
 
-        this.onPlayerPassed += testingEvent.CurrentNodePosition;
-        this.onPlayerPassed += testingEvent.NullMethod;
-        
-        // but not void
-        // this.onPlayerEnter += VoidMethod;
+        this.addEvent(EventTriggerType.Passed, testingEvent.NullMethod);
+        this.addEvent(EventTriggerType.Passed, testingEvent.CurrentNodePosition);
     }
-
-
-
 }

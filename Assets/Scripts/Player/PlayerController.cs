@@ -195,7 +195,7 @@ public class PlayerController : MonoBehaviour
 
             // Event triggered
             string ret = currentNode.PlayerEntered(this.playerName);
-            Debug.Log(ret);
+            // Debug.Log(ret);
 
             // ret event response
             switch(ret)
