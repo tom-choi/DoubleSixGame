@@ -318,33 +318,11 @@ public class MMap : MonoBehaviour
         nodeCount = 0;
     }
 
-    public void OnNodeReached(MapNode node)
-    {
-        if (node.eventInfo != null)
-        {
-            switch (node.eventInfo.mapEventType)
-            {
-                case MapEventType.Start:
-                    Debug.Log("Starting event: " + node.eventInfo.eventMessage);
-                    break;
-                case MapEventType.Normal:
-                    Debug.Log("Normal event: " + node.eventInfo.eventMessage);
-                    break;
-                case MapEventType.End:
-                    Debug.Log("Ending event: " + node.eventInfo.eventMessage);
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
     //创建第一个节点
     private MapNode CreateFirstNodes()
     {
         firstNode = new MapNode();
         firstNode.position = mapObject.transform.position;
-        firstNode.mapEventType = MapEventType.Start;
         nodeCount = 1;
         // 创建 BBase 物体的副本，并将其放置在节点的位置
         InstantiateAndRename(bBasePrefab, firstNode.position, mapObject.transform,
@@ -361,7 +339,6 @@ public class MMap : MonoBehaviour
             {
                 MapNode newNode = new MapNode();
                 newNode.position = currentNode.position + increment;
-                newNode.mapEventType = MapEventType.Normal;
                 InstantiateAndRename(bBasePrefab, newNode.position, mapObject.transform,
                     "({0},{1},{2})");
                 
@@ -384,7 +361,6 @@ public class MMap : MonoBehaviour
         {
             MapNode newNode = new MapNode();
             newNode.position = currentNode.position + nodeIncrements;
-            newNode.mapEventType = MapEventType.Normal;
             newNode = InstantiateAndRename(bBasePrefab, newNode.position, mapObject.transform,
                 "({0},{1},{2})",newNode);
             
@@ -427,19 +403,16 @@ public class MMap : MonoBehaviour
         switch (materialName)
         {
             case "RedMaterial (Instance)":
-                mapNode.onPlayerEnterWithMessage += testingEvent.RedMethod;
+                mapNode.addEvent(EventTriggerType.Enter, testingEvent.RedMethod);
                 break;
             case "BlueMaterial (Instance)":
-                mapNode.onPlayerEnterWithMessage += testingEvent.BlueMethod;
-                // mapNode.onPlayerEnterWithMessage += testingEvent.HelloMethod1;
-                // mapNode.onPlayerEnterWithMessage += testingEvent.HelloMethod2;
-                // mapNode.onPlayerEnterWithMessage += testingEvent.HelloMethod3;
+                mapNode.addEvent(EventTriggerType.Enter, testingEvent.BlueMethod);
                 break;
             case "GreenMaterial (Instance)":
-                mapNode.onPlayerEnterWithMessage += testingEvent.GreenMethod;
+                mapNode.addEvent(EventTriggerType.Enter, testingEvent.GreenMethod);
                 break;
             case "YellowMaterial (Instance)":
-                mapNode.onPlayerEnterWithMessage += testingEvent.YellowMethod;
+                mapNode.addEvent(EventTriggerType.Enter, testingEvent.YellowMethod);
                 break;
             default:
                 break;

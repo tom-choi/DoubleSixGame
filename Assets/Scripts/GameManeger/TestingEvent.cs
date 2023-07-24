@@ -10,29 +10,18 @@ public class TestingEvent
     {
         gameController = GameObject.Find("GameController");
     }
-    public string OnSomeoneEnterNode(MapNode node)
-    {
-        Debug.Log($"Someone at position {node.position}");
-        // Add trigger event logic here
-        return "OnSomeoneEnterNode";
-    }
     public string OnPlayerEnterNode(MapNode node,string name)
     {
         Debug.Log($"{name} at position {node.position}");
         // Add trigger event logic here
         return "OnPlayerEnterNode";
     }
-    public string NullMethod(MapNode node)
-    {
-        // Debug.Log($"This is AnotherMethod()");
-        return "NullMethod";
-    }
     public string NullMethod(MapNode node,string message)
     {
         // Debug.Log($"This is AnotherMethod()");
         return "NullMethod";
     }
-    public string CurrentNodePosition(MapNode node)
+    public string CurrentNodePosition(MapNode node, string message)
     {
         // Debug.Log($"{node.position}");
         return "CurrentNodePosition";
@@ -54,22 +43,22 @@ public class TestingEvent
         Debug.Log($"This is YellowMethod, player have to relax 1 round");
         return "YellowMethod";
     }
-    public string HelloMethod1(MapNode node, string name)
-    {
-        return "HelloMethod1";
-    }
-    public string HelloMethod2(MapNode node, string name)
-    {
-        return "HelloMethod2";
-    }
-    public string HelloMethod3(MapNode node, string name)
-    {
-        return "HelloMethod3";
-    }
     public string GreenMethod(MapNode node,string name)
     {
         return "GreenMethod";
     }
+    // public string HelloMethod1(MapNode node, string name)
+    // {
+    //     return "HelloMethod1";
+    // }
+    // public string HelloMethod2(MapNode node, string name)
+    // {
+    //     return "HelloMethod2";
+    // }
+    // public string HelloMethod3(MapNode node, string name)
+    // {
+    //     return "HelloMethod3";
+    // }
 }
 
 // In the Property class:

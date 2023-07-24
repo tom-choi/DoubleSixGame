@@ -3,26 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class MapNode
 {
     public Vector3 position;
     public string GUID;
-
     public Dictionary<MapNode, int> nextNodes = new Dictionary<MapNode, int>();
     public Dictionary<MapNode, int> preNodes = new Dictionary<MapNode, int>();
-    public MapEventType mapEventType;
-    public MapEvent eventInfo;
+    public MapEvent[] eventInfo;
 
     public void AddNodeInNextNodes(MapNode node,int level)
     {
         nextNodes.Add(node,level);
     }
-
     public void AddNodeInPreNodes(MapNode node,int level)
     {
         preNodes.Add(node,level);
     }
-    
     public void RemoveNodeFromNextNodes(MapNode node)
     {
         if (nextNodes.ContainsKey(node))
@@ -30,7 +27,6 @@ public class MapNode
             nextNodes.Remove(node);
         }
     }
-
     public void RemoveNodeFromPreNodes(MapNode node)
     {
         if (preNodes.ContainsKey(node))
@@ -38,12 +34,10 @@ public class MapNode
             preNodes.Remove(node);
         }
     }
-
     public bool NextNodesIsEmpty()
     {
         return nextNodes.Count == 0;
     }
-
     public bool PreNodesIsEmpty()
     {
         return preNodes.Count == 0;
@@ -64,79 +58,56 @@ public class MapNode
         return nodeList[randomIndex];
     }
 
-
     // 添加事件委托类型的成员变量，當玩家進入地塊的時候
-    public MapNodeEvent onPlayerEnter;
-    public MapNodeEvent onplayerPassed;
-    public MapNodeEventWithMessage onPlayerEnterWithMessage;
-    public MapNodeEventWithMessage onplayerPassedWithMessage;
-    public string PlayerEntered()
+    private MapNodeEventWithMessage onPlayerEnter;
+    private MapNodeEventWithMessage onPlayerPassed;
+    public void addEvent(EventTriggerType type, MapNodeEventWithMessage func)
+    {
+        switch (type)
+        {
+            case EventTriggerType.Enter:
+                this.onPlayerEnter += func;
+                break;
+            case EventTriggerType.Passed:
+                this.onPlayerPassed += func;
+                break;
+            default:
+                Debug.Log("addEvent failed! check is EventTriggerType correct");
+                break;
+        }
+    }
+    
+    // can input some details(messages) depends on according event
+    public string PlayerEntered(string details)
     {
         string ret = "";
         if (onPlayerEnter != null)
         {
-            ret = onPlayerEnter(this);
+            ret = onPlayerEnter(this,details);
         }
         return ret;
     }
-    public string PlayerEntered(string message)
+
+    // can input some details(messages) depends on according event
+    public string PlayerPassed(string details)
     {
         string ret = "";
-        if (onPlayerEnter != null)
+        if (onPlayerPassed != null)
         {
-            ret = onPlayerEnterWithMessage(this,message);
+            ret = onPlayerPassed(this,details);
         }
         return ret;
-        //return ;
-    }
-    public void PlayerPassed()
-    {
-        if (onplayerPassed != null)
-        {
-            onplayerPassed(this);
-        }
-    }
-    public void PlayerPassed(string message)
-    {
-        if (onplayerPassed != null)
-        {
-            onplayerPassedWithMessage(this,message);
-        }
     }
 
-    // public void OnPlayerEnterNode(MapNode node)
-    // {
-    //     Debug.Log($"Player entered node {node.position}");
-    //     // Add trigger event logic here
-    // }
-    // public void AnotherMethod(MapNode node)
-    // {
-    //     Debug.Log($"This is AnotherMethod()");
-    // }
-    // public void VoidMethod()
-    // {
-    //     Debug.Log($"This is VoidMethod()");
-    // }
-
-    // Start is called before the first frame update
     public MapNode()
     {
         this.GUID = Guid.NewGuid().ToString();
-        // two ways of adding events
-        // this.onPlayerEnter += OnPlayerEnterNode;
-        // this.onPlayerEnter += AnotherMethod;
-        // this.onPlayerEnter += testingEvent.OnSomeoneEnterNode;
         TestingEvent testingEvent = new TestingEvent();
 
-        this.onPlayerEnter += testingEvent.NullMethod;
-        this.onPlayerEnterWithMessage += testingEvent.OnPlayerEnterNode;
+        this.addEvent(EventTriggerType.Enter, testingEvent.NullMethod);
+        this.addEvent(EventTriggerType.Enter, testingEvent.OnPlayerEnterNode);
 
-        this.onplayerPassed += testingEvent.CurrentNodePosition;
-        this.onplayerPassedWithMessage += testingEvent.NullMethod;
-        
-        // but not void
-        // this.onPlayerEnter += VoidMethod;
-
+        this.addEvent(EventTriggerType.Passed, testingEvent.NullMethod);
+        this.addEvent(EventTriggerType.Passed, testingEvent.CurrentNodePosition);
     }
-
 }

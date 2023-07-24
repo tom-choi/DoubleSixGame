@@ -14,8 +14,8 @@ public class PlayerController : MonoBehaviour
     private bool diceInHand = false;
     private bool iWannaToDice = false;
     private bool iWannaToSkip = false;
-    private bool iWannaGo = false;
-    private int tmpGo = 0;
+    // private bool iWannaGo = false;
+    // private int tmpGo = 0;
     private int tmpDiceResult;
     public bool isAI = false;
 
@@ -129,27 +129,25 @@ public class PlayerController : MonoBehaviour
                 }
 
                 // Event triggered
-                currentNode.PlayerEntered();
                 string ret = currentNode.PlayerEntered(this.playerName);
-                // Debug.Log(ret);
-
-               // ret event response
-                if (ret == "GreenMethod") 
+                
+                // ret event response
+                switch(ret)
                 {
-                    // Random movement
-                    yield return new WaitForSeconds(moveWaitTime);
-                    MoveToTargetNode(map.GetRandomNonEmptyNode());
-                }
-                else if (ret == "RedMethod")
-                {
-                    // made player can move again
-                    GiveMeDice();
-                    isContinue = true;
-                }
-                else if (ret == "YellowMethod")
-                {
-                    // made player stop in the next round
-                    relaxTime = 1;
+                    case "GreenMethod":
+                        // Random movement
+                        yield return new WaitForSeconds(moveWaitTime);
+                        MoveToTargetNode(map.GetRandomNonEmptyNode());
+                        break;
+                    case "RedMethod":
+                        // made player can move again
+                        GiveMeDice();
+                        isContinue = true;
+                        break;
+                    case "YellowMethod":
+                        // made player stop in the next round
+                        relaxTime = 1;
+                        break;
                 }
             }
             else if (IsSkip())
@@ -196,20 +194,23 @@ public class PlayerController : MonoBehaviour
             }
 
             // Event triggered
-            currentNode.PlayerEntered();
             string ret = currentNode.PlayerEntered(this.playerName);
-            Debug.Log(ret);
+            // Debug.Log(ret);
 
             // ret event response
-            if (ret == "GreenMethod")
+            switch(ret)
             {
-                yield return new WaitForSeconds(moveWaitTime);
-                MoveToTargetNode(map.GetRandomNonEmptyNode());
-            }
-            else if (ret == "RedMethod")
-            {
-                GiveMeDice();
-                isContinue = true;
+                case "GreenMethod":
+                    yield return new WaitForSeconds(moveWaitTime);
+                    MoveToTargetNode(map.GetRandomNonEmptyNode());
+                    break;
+                case "RedMethod":
+                    GiveMeDice();
+                    isContinue = true;
+                    break;
+                case "YellowMethod":
+                    relaxTime = 1;
+                    break;
             }
         }
     }
@@ -229,7 +230,6 @@ public class PlayerController : MonoBehaviour
             //     Debug.Log(node);
             // }
 
-            currentNode.PlayerPassed();
             currentNode.PlayerPassed(this.playerName);
             Vector3 targetPosition = currentNode.position + new Vector3(0,0.5f,0);
             StartCoroutine(MoveToNode(targetPosition));
@@ -241,7 +241,6 @@ public class PlayerController : MonoBehaviour
         if (targetNode != null)
         {
             currentNode = targetNode;
-            currentNode.PlayerPassed();
             currentNode.PlayerPassed(this.playerName);
             Vector3 targetPosition = currentNode.position + new Vector3(0,0.5f,0);
             StartCoroutine(MoveToNode(targetPosition));
