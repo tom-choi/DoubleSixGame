@@ -6,8 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     public MMap map;
     public string playerName;
-    public float moveSpeed = 2.5f;
-    public float moveTime = 0.75f;
+    private float moveSpeed = 3.5f;
+    private float moveTime = 0.15f;
     private float moveWaitTime;
 
     private MapNode currentNode;
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     {
         currentNode = map.firstNode;
         transform.position = currentNode.position + new Vector3(0,0.5f,0);
-        moveWaitTime = moveTime + 0.25f;
+        moveWaitTime = moveTime + 0.10f;
     }
 
     // void Update()
