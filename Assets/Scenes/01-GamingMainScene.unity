@@ -1355,9 +1355,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 526181973}
   playerName: Player
-  moveSpeed: 2.5
-  moveTime: 0.5
   isAI: 0
+  relaxTime: 0
 --- !u!114 &126248881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3612,9 +3611,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 526181973}
   playerName: AIPlayer (3)
-  moveSpeed: 2.5
-  moveTime: 0.5
   isAI: 1
+  relaxTime: 0
 --- !u!135 &633127073
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4088,9 +4086,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 526181973}
   playerName: AIPlayer (1)
-  moveSpeed: 2.5
-  moveTime: 0.5
   isAI: 1
+  relaxTime: 0
 --- !u!135 &671915502
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5428,6 +5425,7 @@ MonoBehaviour:
   targets: []
   loseFocus: []
   OutlineEffect: {fileID: 2100000, guid: 1f829a5a0109151439ebf8374c934a3b, type: 2}
+  map: {fileID: 526181973}
   block_channel: {fileID: 1105452485}
 --- !u!114 &963194233
 MonoBehaviour:
@@ -7546,9 +7544,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 526181973}
   playerName: AIPlayer (2)
-  moveSpeed: 2.5
-  moveTime: 0.5
   isAI: 1
+  relaxTime: 0
 --- !u!135 &1385265615
 SphereCollider:
   m_ObjectHideFlags: 0

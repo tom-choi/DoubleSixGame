@@ -18,7 +18,6 @@ public class TestingEvent
     }
     public string NullMethod(MapNode node,string message)
     {
-        // Debug.Log($"This is AnotherMethod()");
         return "NullMethod";
     }
     public string CurrentNodePosition(MapNode node, string message)
